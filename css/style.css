@@ -1,0 +1,268 @@
+body{
+    margin: 0px;
+    background-color: #292929;
+    background-repeat: repeat;
+    background-blend-mode: color-burn;
+    width: 100%;
+    background-image: url('../assets/patterns/pattern1.png');
+}
+
+img{
+    width: 100%;
+}
+
+section{
+    position: relative;
+}
+
+section svg {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+section .content{
+    position: absolute;
+    left: 0;
+    top: 0px;
+    z-index: 1;
+}
+
+section .top-clip {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+}
+
+section {
+    /*background-size: 100% auto;*/
+}
+
+section #pattern_top {
+    fill: transparent;
+}
+
+section #pattern_bottom {
+    fill: transparent;
+}
+
+.pattern-prev-clip,.pattern-bottom-clip{
+    /*background-size: 100% auto;*/
+}
+
+/* Abdul Style =======================>>> */
+/* PUSH MENU */
+
+#main-menu::-webkit-scrollbar {
+    display: none;
+}
+
+#main-menu {
+    /* border: 1px solid indianred; */
+    /* left: -250px; */
+    transform: translateX(-250px);
+    position: sticky;
+    top: 0px;
+    overflow: scroll;
+    width: 250px;
+    height: 0;
+    padding: 50px 20px 0px 20px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all .3s ease-in;
+    -moz-transition: all .3s ease-in;
+    -o-transition: all .3s ease-in;
+    transition: all .3s ease-in;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--grey-menu);
+    /* z-index: 99999; */
+    opacity: 0;
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background: #3e4145;
+    margin: 20px 0px;
+}
+
+#main-menu ul {
+    list-style: none;
+    /* overflow: scroll; */
+}
+
+#main-menu ul::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* Hide scrollbar for IE, Edge and Firefox */
+
+#main-menu ul {
+    /* -ms-overflow-style: none; */
+    /* IE and Edge */
+    /* scrollbar-width: none; */
+    /* Firefox */
+}
+
+#main-menu ul li a {
+    display: block;
+    font-weight: 400;
+    line-height: 35px;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+    text-decoration: none;
+    text-transform: capitalize;
+    color: white;
+    font-size: 0.9em;
+    /* border-top: 1px solid #eee; */
+}
+
+#main-menu ul li a:hover {
+    text-decoration: underline;
+}
+
+.main-menu-container {
+    /* position: relative; */
+    height: 100vh;
+}
+
+body.open #main-menu {
+    height: 100%;
+}
+
+body.open .main-menu-container {
+    width: 250px;
+    z-index: 999999;
+    /* background: indianred; */
+}
+
+body.open #main-menu {
+    transform: translateX(0px);
+    opacity: 1;
+}
+
+
+/* MAIN PAGE */
+
+/*.page-wrap {
+    -webkit-transition: all .3s ease-in;
+    -moz-transition: all .3s ease-in;
+    -o-transition: all .3s ease-in;
+    transition: all .3s ease-in;
+    position: relative;
+}*/
+
+/* MENU TOGGLE ICON */
+
+.menu-button-container {
+    position: absolute;
+    top: 70px;
+    left: 0px;
+    -webkit-transition: all .3s ease-in;
+    -moz-transition: all .3s ease-in;
+    -o-transition: all .3s ease-in;
+    transition: all .3s ease-in;
+}
+
+body.open .menu-button-container {
+    margin-left: 250px;
+}
+
+button:focus {
+    outline: none;
+}
+
+#menu-toggle {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    border: none;
+    background: black;
+    color: white;
+    border: 0.5px solid rgba(255, 255, 255, 0.5);
+    border-left: none;
+    font-size: 16px;
+    text-transform: uppercase;
+    line-height: 1.2;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 0px 15px 15px 0px;
+}
+
+.social-icon {
+    width: 24px;
+    margin: 0px 6px;
+}
+
+.social-icon:hover {
+    filter: brightness(130%);
+}
+
+/*End Abdul Style ========================<<< */
+
+/*Sub Menu style*/
+
+.menu > li{
+    padding: 0 10px
+}
+
+.menu > li:hover{
+    background: rgba(255,255,255,0.1) !important;
+}
+
+.menu-dropdown{
+    display: flex;
+    align-items: center;
+}
+
+.menu-dropdown a{
+    flex-grow: 1;
+}
+
+.menu-dropdown i{
+    text-align: right;
+    color: white;
+    cursor: pointer;
+}
+
+.sub-menu:hover,
+.menu-dropdown.expand:hover{
+    background: transparent !important;
+}
+
+.sub-menu{
+    display: none;
+}
+
+.sub-menu ul li{
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.menu-dropdown.expand + .sub-menu{
+    display: block;
+}
+
+
+@media screen and (max-width: 768px) {
+    .content > div{
+        display: block !important;
+    }
+
+    .content .cnt-1{
+        max-width: 100% !important;
+    }
+}
