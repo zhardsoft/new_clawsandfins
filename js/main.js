@@ -125,11 +125,8 @@ function loadSVGInject(svg){
 
 var headerHeight=0; 
 var footerHeight=0; 
-$(document).ready(function(){
-  $('.img-arc').each(function(){
-    SVGInject(this);
-  })
 
+function initHeaderFooter(){
   headerHeight=$('#headerArc').height();
   footerHeight=$('footer').height();
 
@@ -143,6 +140,16 @@ $(document).ready(function(){
       'margin-bottom': '-'+footerHeight+'px',
     }
   );
+}
+
+$(document).ready(function(){
+  $('.img-arc').each(function(){
+    SVGInject(this);
+
+    initHeaderFooter();
+  })
+
+  
 
   // Toggle Menu
   $('#menu-toggle').click(function(){
@@ -165,9 +172,12 @@ $(document).ready(function(){
 })
 
 $(window).on('resize',function(){
+  initHeaderFooter();
+  
   svgInjectElements.forEach(function(svg){
     loadSVGInject(svg);
   })
+
   // $('section svg').each(function(){
   //   var svgElm=$(this);
   //   var svgHeight=svgElm.height();

@@ -258,11 +258,42 @@ button:focus {
 
 
 @media screen and (max-width: 768px) {
-    .content > div{
-        display: block !important;
+    #mainMenuContainer,
+    #main-menu {
+        width: 100%;
     }
 
-    .content .cnt-1{
-        max-width: 100% !important;
+    #main-menu {
+        background-color: rgba(39, 41, 43, 0.9);
+    }
+
+    #main-menu>a>img {
+        width: 80px;
+    }
+
+    body.open .menu-button-container {
+        margin-left: unset !important;
+        width: 100%;
+        top: 0px;
+    }
+
+    body.open #menu-toggle {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        top: 20px;
+        right: 20px;
+        color: transparent;
+        border-radius: 20px;
+        border: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    body.open #menu-toggle:after {
+        font-family: 'Material Icons';
+        content: "\e5cd";
+        color: white;
+        position: absolute;
+        font-size: 18px;
     }
 }
