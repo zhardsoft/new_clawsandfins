@@ -368,6 +368,38 @@ body.open #headerSvg img {
     color: white;
 }
 
+.logo button {
+    display: none;
+    margin-top: 20px;
+    background: transparent;
+    border: 1px solid #FFF;
+    color: #FFF;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.logo.image-opened {
+    background: transparent;
+    border: 0;
+    width: 150px;
+    height: auto;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.logo.image-opened img {
+    display: block;
+}
+
+.logo.image-opened span {
+    display: none;
+}
+
+.logo.image-opened button {
+    display: block;
+}
+
 .button-primary,
 .button-secondary
 {
