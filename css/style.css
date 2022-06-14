@@ -283,8 +283,9 @@ body.open #headerSvg img {
 
 /* Form Input */
 
-.content form {
+.content form label{
     color: #FFFFFF;
+    font-size: 12px;
 }
 
 .input-text>* {
@@ -308,6 +309,35 @@ body.open #headerSvg img {
     padding: 10px;
 }
 
+.input-textarea>* {
+    display: block;
+}
+
+.input-textarea,
+.input-textarea textarea {
+    width: 100%;
+}
+
+.input-textarea {
+    padding: 10px 5px;
+}
+
+.input-textarea label {
+    margin-bottom: 10px;
+}
+
+.input-textarea textarea {
+    padding: 10px;
+}
+
+.input-text input,
+.input-textarea textarea {
+    color: #FECC2E;
+    background-color: #181818;
+    border: 0px;
+    border-bottom: 1px solid #999999;
+}
+
 .logo-container label {
     display: block;
     margin-bottom: 10px;
@@ -328,6 +358,7 @@ body.open #headerSvg img {
 
 .logo span {
     font-size: 40px;
+    color: white;
 }
 
 .button-primary {
@@ -342,6 +373,208 @@ body.open #headerSvg img {
     color: #FFF;
     border-radius: 5px;
     font-size: 17px
+}
+
+.input-error input {
+    border-bottom: 1px solid #FF5951;
+    color: #FF5951;
+}
+
+.err-msg {
+    color: #FF5951;
+    font-size: 12px;
+    padding: 5px 0px;
+}
+
+/* Custom Marker */
+.gm-style-iw {
+    width: 350px !important;
+    padding: 0px !important;
+    /* 	top: 0px !important; */
+    /* 	left: 0px !important; */
+    background-color: #181818 !important;
+    /* 	box-shadow: 0 1px 6px rgba(178, 178, 178, 0.6); */
+    /* 	border: 1px solid rgba(72, 181, 233, 0.6); */
+    /* 	border-radius: 2px 2px 10px 10px; */
+}
+
+.gm-style .gm-style-iw-t::after {
+    background: #181818;
+}
+
+.gm-style-iw-d {
+    overflow: hidden !important;
+    max-height: unset !important;
+}
+
+#iw-container {
+    /* 	margin-bottom: 10px; */
+}
+
+#iw-container .iw-title {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 10px;
+    background-color: #FF7F06;
+    color: #181818;
+    margin: 0;
+    border-radius: 2px 2px 0 0;
+}
+
+#iw-container .iw-content {
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 400;
+    margin-right: 1px;
+    max-height: 140px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.map-marker-label {
+    color: #d1d1d1;
+    padding: 8px 15px;
+    font-size: 12px;
+}
+
+/* Country - City Dropdown */
+.country-city {
+    margin: 8px -5px;
+}
+
+.country-city+.input-textarea {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#country,
+#city {
+    position: relative;
+    background-color: #181818;
+    border: 0px;
+    border-bottom: 1px solid #999999;
+    padding: 10px;
+    font-size: 14px;
+    margin: 0 5px;
+}
+
+#country>span,
+#city>span {
+    color: #696969;
+}
+
+#country,
+#city {
+    cursor: pointer;
+}
+
+#country.expanded #country-box,
+#city.expanded #city-box {
+    display: block;
+}
+
+.country-city-dropdown.selected .text {
+    color: #FECC2E;
+}
+
+#country-box,
+#city-box {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #FFF;
+    z-index: 1;
+    max-height: 300px;
+    overflow: auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    padding: 5px 0px;
+}
+
+#country-box:empty,
+#city-box:empty {
+    padding: 10px 8px;
+}
+
+#country-box:empty:before {
+    content: "Loading...";
+    font-size: 14px;
+}
+
+#city-box:empty:before {
+    content: "Select Country";
+    font-size: 14px;
+}
+
+#city-box.loading:before {
+    content: "Loading...";
+    font-size: 14px;
+}
+
+.country-item,
+.city-item {
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.country-item:hover,
+.city-item:hover {
+    background: #FFE0C1;
+}
+
+/* Info */
+.info {
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.primary-info {
+    background-color: #ffe0c1;
+}
+
+.primary-info>* {
+    margin: 0 5px !important;
+    color: #aa5b0f !important;
+}
+
+.primary-info>label span {
+    background: #aa5b0f;
+    color: #FFF;
+    display: inline-block;
+    padding: 0px 5px;
+    border-radius: 5px;
+}
+
+/* Checkbox */
+.checkbox {
+    width: 20px;
+    height: 20px;
+    background: #181818;
+    margin: 10px 0;
+    cursor: pointer;
+    border: 1px solid #999999;
+    border-radius: 5px;
+}
+
+.checkbox span {
+    display: none;
+    color: #FF7F06;
+    font-size: 15px;
+}
+
+.checkbox+label {
+    margin: 0 10px !important;
+}
+
+.checkbox input[type=checkbox] {
+    display: none;
+}
+
+.checkbox input[type=checkbox]:checked+span {
+    display: block;
 }
 
 

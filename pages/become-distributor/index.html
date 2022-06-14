@@ -19,6 +19,22 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../js/svg-inject.js"></script>
     <script src="../../js/main.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    <style>
+        .visiting-address{
+            height: 300px;
+        }
+        .visiting-address #map{
+            height: 100%;
+        }
+
+        .map-marker-label{
+            display: block;
+            border-radius: 5px;
+            padding: 2px 8px;
+        }
+    </style>
 </head>
 
 <body class="page-no-arc">
@@ -236,8 +252,9 @@
             <section class="section" data-clip-id="1" style="background-image: url('../../assets/bg/grey4.jpg');">
                 <div class="content">
                     <div class="full-width align-in-center pb-120">
-                        <div class="_75-width md_90-width md_align-center flex-column justify-center">
-                            <form class="full-width">
+                        <div class="_75-width md_90-width md_align-center flex-column justify-center max-w700">
+                            <h1 class="h1 text-yellow sm_font-size-35 sm_mt-130 text-center mb-30">Become a Distributor</h1>
+                            <form action="" method="post" onsubmit="return inputValidation(this)">
                                 <div class="full-width text-center">
                                     <div class="logo-container align-in-center flex-column">
                                         <label>Your Logo (Optional)</label>
@@ -261,28 +278,84 @@
                                 </div>
                                 <div class="d-flex full-width">
                                     <div class="input-text">
-                                        <label>Address</label>
-                                        <input type="text" id="address" placeholder="Address">
+                                        <label>Visiting Address</label>
+                                        <div class="input-textarea p-0">
+                                            <textarea id="visiting-address" placeholder="Address"></textarea>
+                                        </div>
+                                        <div class="mt-10">
+                                            <div class="d-flex-important align-center">
+                                                <span class="checkbox align-in-center">
+                                                    <input type="checkbox" id="no-disclose">
+                                                    <span class="material-icons">check</span>
+                                                </span>
+                                                <label>We don't want to disclose our location on the map</label>
+                                            </div>
+                                        </div>
+                                        <div class="country-city d-flex-important">
+                                            <div id="country" class="country-city-dropdown equal-width" value="">
+                                                <span class="align-center justify-between"><span class="text">Country</span><i
+                                                        class="material-icons expand-more">expand_more</i></span>
+                                                <div id="country-box"></div>
+                                            </div>
+                                            <div id="city" class="country-city-dropdown equal-width" value="">
+                                                <span class="align-center justify-between"><span class="text">City</span><i
+                                                        class="material-icons expand-more">expand_more</i></span>
+                                                <div id="city-box"></div>
+                                            </div>
+                                        </div>
+                                        <div class="visiting-address">
+                                            <div id="map" tabindex="-1"></div>
+                                        </div>
+                                        <div class="info primary-info d-flex-important">
+                                            <span class="material-icons">star</span>
+                                            <label><strong>PLEASE NOTE!</strong> A correct map-location IS CRUCIAL for your customers to be able to find your business, and it is also
+                                            needed for a correct display on our <strong>"Where to buy our products"</strong> page.</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex full-width">
+                                    <div class="input-textarea">
+                                        <label>Postal Address</label>
+                                        <textarea id="postal-address" placeholder="Postal Address"></textarea>
                                     </div>
                                 </div>
                                 <div class="d-flex full-width">
                                     <div class="input-text">
                                         <label>Phone Number</label>
-                                        <input type="text" id="phone-number" placeholder="Phone Number">
-                                    </div>
-                                    <div class="input-text">
-                                        <label>Post Code</label>
-                                        <input type="text" id="post-code" placeholder="Post Code">
+                                        <div class="input-group d-flex-important align-center full-width">
+                                            <div id="phone-code" class="dropdown equal-width" value="1">
+                                                <span class="align-center justify-between"><span class="text">+1</span><i
+                                                        class="material-icons expand-more">expand_more</i></span>
+                                                <ul class="dropdown-item"></ul>
+                                            </div>
+                                            <input type="number" id="phone-number" placeholder="Phone Number">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="d-flex full-width">
                                     <div class="input-text">
                                         <label>Administration Email</label>
-                                        <input type="text" id="administration-email" placeholder="Administration Email">
+                                        <input type="email" id="administration-email" placeholder="Administration Email">
                                     </div>
                                     <div class="input-text">
                                         <label>Order Email</label>
-                                        <input type="text" id="order-email" placeholder="Order Email">
+                                        <input type="email" id="order-email" placeholder="Order Email">
+                                    </div>
+                                </div>
+                                <div class="d-flex full-width flex-column px-5">
+                                    <div class="info primary-info d-flex-important">
+                                        <span class="material-icons">help</span>
+                                        <label>If you encounters any problems, please tick the <span>I need some support</span> box, and we will contact you on your
+                                        Administration email address registered here.</label>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex-important align-center">
+                                            <span class="checkbox align-in-center">
+                                                <input type="checkbox" id="need-support">
+                                                <span class="material-icons">check</span>
+                                            </span>
+                                            <label>I need some support</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="d-flex full-width justify-center">
@@ -448,6 +521,300 @@
             </svg>
         </footer>
     </div>
+
+    <script>
+        function inputValidation(form){
+            var errMsgCount=0;
+            $(form).find('input[type=text],textarea').each(function(){
+                var elm=$(this);
+                var parentElm=elm.parent();
+                if(elm.val()==''){
+                    errMsgCount++;
+                    parentElm.addClass('input-error');
+                    if(parentElm.find('.err-msg').length==0){
+                        var inpErr=document.createElement('span');
+                            $(inpErr).addClass('err-msg').html('Required');
+                        parentElm.append(inpErr);
+                    }
+                    elm.keyup(function(){
+                        $(this).parent().removeClass('input-error');
+                        $(this).next('.err-msg').remove();
+                    })
+                    if(errMsgCount==1){
+                        elm.focus();
+                    }
+                }
+            })
+
+            if(errMsgCount>0){
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVckSdSfsjC7N1xkOULLyq38PbDiu9WvU&callback=initMap" defer></script>
+
+    <script>
+        var countrySelectedKey=0;
+        var countrySelectedID=0;
+        var citySelectedID=0;
+        function countryFilter(data){
+            return data.filter(
+                function (data) { return data.cities.length > 0 }
+            )
+        }
+        $.getJSON('../../library/country-city/countries+cities.json', function (data) {
+            data = countryFilter(data);
+            $.each(data, function (key, val) {
+                var item=$('<div class="country-item" value="' + val.name +'">' + val.name +'</div>');
+                    item.click(function(e){
+                        e.stopPropagation();
+                        $('#city .text').html('City');
+                        $('#city-box').addClass('loading').html('');
+                        countrySelectedKey=key;
+                        countrySelectedID=val.id;
+                        var pc= data[countrySelectedKey].phone_code;
+                        $('#phone-code')
+                            .attr('value', pc.replace('-'))
+                            .find('.text').html('+'+pc);
+                        setMapAddress(val.name);
+                        getCities();
+                        var prn=$(this).parents('.country-city-dropdown');
+                            prn.removeClass('expanded').addClass('selected');
+                            prn.find('.text').html( $(this).attr('value') );
+                    })
+                $('#country-box').append(item);
+
+                var phoneCode = $('<li value="' + val.phone_code.replace('-') + '">' + val.name + ' (+'+ val.phone_code + ')' + '</li>');
+                $('#phone-code .dropdown-item').append(phoneCode);
+            });
+
+        });
+
+        function getCities(){
+            $.getJSON('../../library/country-city/countries+cities.json', function (data) {
+                $('#city-box').removeClass('loading');
+                $.each(countryFilter(data)[countrySelectedKey].cities.filter((v, i, a) => a.findIndex(v2 => (v2.name === v.name)) === i), function (key, val) {
+                    var item = $('<div class="city-item" value="' + val.name + '">' + val.name + '</div>');
+                    item.click(function (e) {
+                        e.stopPropagation();
+                        citySelectedID = val.id;
+                        var address= $('#country .text').html() + ', ' + val.name;
+                        console.log(address);
+                        setMapAddress(address);
+                        var prn = $(this).parents('.country-city-dropdown');
+                        prn.removeClass('expanded').addClass('selected');
+                        prn.find('.text').html($(this).attr('value'));
+                    })
+                    $('#city-box').append(item);
+                });
+
+            });
+        }
+
+        $(function(){
+            $('#country, #city, .dropdown').click(function(){
+                var elm=this;
+                $('.country-city-dropdown, .dropdown').each(function(){
+                    if(!this.isSameNode(elm)){
+                        $(this).removeClass('expanded');
+                    }
+                })
+                $(this).toggleClass('expanded');
+                
+            })
+            
+            $('#no-disclose').on('change', function () {
+                if (this.checked) {
+                    marker.setMap(null);
+                } else {
+                    addMarker();
+                    setMapPosition();
+                    geocodeLatLng(geocoder, map);
+                }
+            })
+
+            $('.checkbox').click(function(){
+                $(this).find('input[type=checkbox]').prop('checked', !$(this).find('input[type=checkbox]').prop('checked')).change();
+            })
+        })
+
+        $(window).click(function(e){
+            if ($(e.target).closest('.country-city-dropdown, .dropdown').length==0) {
+                var dropdowns = $(".country-city-dropdown, .dropdown");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if ($(openDropdown).hasClass('expanded')) {
+                        $(openDropdown).removeClass('expanded');
+                    }
+                }
+            }
+        })
+
+        /**
+        * @license
+        * Copyright 2019 Google LLC. All Rights Reserved.
+        * SPDX-License-Identifier: Apache-2.0
+        */
+                // Note: This example requires that you consent to location sharing when
+                // prompted by your browser. If you see the error "The Geolocation service
+                // failed.", it means you probably did not give permission for the browser to
+                // locate you.
+                let map, latlng, marker, infoWindow, geocoder;
+
+                function setMapPosition() {
+                    infoWindow.setPosition(latlng);
+                    //infoWindow.setContent('<span class="map-marker-label"></span>');
+                    infoWindow.open(map, marker);
+                    map.setCenter(latlng);
+                }
+
+                function initMap() {
+                    latlng = { lat: -34.397, lng: 150.644 };
+
+                    map = new google.maps.Map(document.getElementById("map"), {
+                        center: latlng,
+                        zoom: 15,
+                    });
+                    geocoder = new google.maps.Geocoder();
+
+                    var content = 
+                        '<div id="iw-container">' +
+                            '<div class="iw-title">Drag and drop pin to change address</div>' +
+                            '<div class="iw-content">' +
+                                '<span class="map-marker-label"></span>'+
+                            '</div>' +
+                        '</div>';
+                    infoWindow = new google.maps.InfoWindow({content: content});
+
+                    addMarker();
+
+                    google.maps.event.addListener(marker, 'dragend', function (marker) {
+                        latlng = marker.latLng;
+                        setMapPosition();
+                        geocodeLatLng(geocoder, map);
+                    });
+
+                    google.maps.event.addListener(map, 'click', function (event) {
+                        latlng= event.latLng;
+                        marker.setPosition(latlng);
+                        geocodeLatLng(geocoder, map);
+                    });
+
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            (position) => {
+                                latlng = {
+                                    lat: position.coords.latitude,
+                                    lng: position.coords.longitude,
+                                };
+
+                                marker.setPosition(latlng);
+                                setMapPosition();
+                                geocodeLatLng(geocoder, map);
+                            },
+                            () => {
+                                handleLocationError(true, infoWindow, map.getCenter());
+                            }
+                        );
+                    } else {
+                        // Browser doesn't support Geolocation
+                        handleLocationError(false, infoWindow, map.getCenter());
+                    }
+
+                }
+
+                function addMarker(){
+                    const svgMarker = {
+                        path: "M0-48c-9.8 0-17.7 7.8-17.7 17.4 0 15.5 17.7 30.6 17.7 30.6s17.7-15.4 17.7-30.6c0-9.6-7.9-17.4-17.7-17.4z",
+                        fillColor: "#FF7F06",
+                        fillOpacity: 1,
+                        strokeWeight: 0,
+                        rotation: 0,
+                        scale: 0.5,
+                        anchor: new google.maps.Point(0, 5),
+                    };
+
+                    marker = new google.maps.Marker({
+                        position: latlng,
+                        map: map,
+                        icon: svgMarker,
+                        draggable: true
+                    });
+
+                    marker.addListener("click", () => {
+                        infoWindow.open(map, marker);
+                    });
+                }
+
+                function geocodeLatLng(geocoder, map) {
+                    geocoder
+                        .geocode({ location: latlng })
+                        .then((response) => {
+                            if (response.results[0]) {
+                                var address= response.results[0].formatted_address;
+                                $('.map-marker-label').html(address);
+                                $('#visiting-address').val(address);
+
+                                var ac= response.results[0].address_components;
+                                if(ac.length>1){
+                                    var d=ac.filter(
+                                        function (data) { return data.types[0] == 'country' }
+                                    );
+                                    $('#country')
+                                        .addClass('selected')
+                                        .find('.text')
+                                        .html(d[0].long_name);
+                                }
+
+                            } else {
+                                $('.map-marker-label').html("Unknown Address");
+                            }
+                        })
+                        .catch((e) => window.alert("Geocoder failed due to: " + e));
+                }
+
+                function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent(
+                        browserHasGeolocation
+                            ? "Error: The Geolocation service failed."
+                            : "Error: Your browser doesn't support geolocation."
+                    );
+                    infoWindow.open(map);
+                }
+
+                function setMapAddress(address) {  // "London, UK" for example 
+                    if (geocoder) {
+                        geocoder.geocode({ 'address': address }, function (results, status) {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                var loc = results[0].geometry.location;
+                                latlng = loc;
+                                // Test address_components
+                                var ac_length = results[0].address_components.length;
+
+                                if (ac_length == 1) {
+                                    // Assume country
+                                    map.setCenter(new google.maps.LatLng(loc.lat(), loc.lng(), 3));
+                                    map.setZoom(5);
+
+                                } else if (ac_length >= 2) {
+                                    // Assume city
+                                    map.setCenter(new google.maps.LatLng(loc.lat(), loc.lng(), 7));
+                                    map.setZoom(13);
+                                }
+                                geocodeLatLng(geocoder, map);
+                                marker.setPosition(latlng);
+                                //setMapPosition();
+                            }
+                        });
+                    }
+                }
+
+    </script>
 </body>
 
 </html>
