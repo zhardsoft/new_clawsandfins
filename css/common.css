@@ -162,6 +162,10 @@ body {
     background-color: var(--answer-bg);
 }
 
+.text-light {
+    color: #858585;
+}
+
 .text-dark {
     color: var(--dark);
 }
@@ -999,6 +1003,10 @@ body {
     width: 1150px;
 }
 
+.max-w200 {
+    max-width: 200px;
+}
+
 .max-w500 {
     max-width: 700px;
 }
@@ -1788,7 +1796,7 @@ body {
 }
 
 .pt-30 {
-    padding-top: 30px;
+    padding-top: 30px !important;
 }
 
 .pt-25 {

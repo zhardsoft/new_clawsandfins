@@ -7,6 +7,12 @@ body{
     background-image: url('../assets/patterns/pattern1.png');
 }
 
+a {
+    font-size: 14px;
+    color: #FF7F06;
+    text-decoration: none;
+}
+
 img{
     width: 100%;
 }
@@ -345,11 +351,12 @@ body.open #headerSvg img {
 
 .logo {
     background-color: rgba(255, 255, 255, 0.1);
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50px;
+    border-radius: 50%;
     margin-bottom: 30px;
+    cursor: pointer;
 }
 
 .logo img {
@@ -357,11 +364,13 @@ body.open #headerSvg img {
 }
 
 .logo span {
-    font-size: 40px;
+    font-size: 45px;
     color: white;
 }
 
-.button-primary {
+.button-primary,
+.button-secondary
+{
     margin: 30px 10px;
 }
 
@@ -373,6 +382,19 @@ body.open #headerSvg img {
     color: #FFF;
     border-radius: 5px;
     font-size: 17px
+}
+
+.button-secondary button {
+    width: 100%;
+    padding: 10px 30px;
+    background: #F85405;
+    border: 0;
+    color: #FFF;
+    border-radius: 5px;
+    font-size: 17px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    border: 1px solid #FFF;
+    cursor: pointer;
 }
 
 .input-error input {
@@ -577,6 +599,219 @@ body.open #headerSvg img {
     display: block;
 }
 
+/* Dropdown */
+.dropdown {
+    position: relative;
+    background: #FFF;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.dropdown .dropdown-item {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #FFF;
+    max-height: 300px;
+    overflow: auto;
+    padding: 8px 0px;
+}
+
+.dropdown.expanded .dropdown-item {
+    display: block;
+}
+
+.dropdown .dropdown-item li {
+    display: block;
+    white-space: nowrap;
+    padding: 8px 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.dropdown .expand-more {
+    color: #7e7d7d;
+}
+
+.dropdown .dropdown-item li:hover {
+    background-color: #FFE0C1;
+}
+
+/* Login  */
+.login {
+    background-image: linear-gradient(90deg, #FF7F06, #F6C80F);
+}
+
+.login img {
+    margin-bottom: -90px !important;
+    z-index: 1;
+}
+
+.login-form {
+    background: #0b0c0e;
+    padding: 20px 20px;
+    padding-top: 120px;
+    min-width: 300px;
+    max-width: 400px;
+    border-radius: 10px;
+}
+
+.login-form h1 {
+    font-size: 20px;
+}
+
+.login-spinner {
+    position: relative;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.login-spinner span {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-image: linear-gradient(90deg, #FF7F06, #F6C80F);
+    border-radius: 50px;
+    color: #0b0c0e;
+    font-size: 40px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
+    z-index: 1;
+}
+
+.loader {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    border: 10px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 10px solid #FF7F06;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    /* Safari */
+    animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.login-spinner+h1 {
+    margin: 0;
+    margin-top: 20px;
+}
+
+/* Icon */
+.big-icon {
+    width: 100px;
+    height: 100px;
+    border: 4px solid #FFF;
+    border-radius: 50%;
+    margin: 20px 0;
+    background-image: linear-gradient(90deg, #FF7F06, #F6C80F);
+}
+
+.big-icon span {
+    font-size: 40px;
+    color: #0b0c0e;
+}
+
+/* Confirm Box */
+.confirm-box {
+    background-image: linear-gradient(120deg, #E50B00, #FF7F06, #F6C80F);
+    padding: 30px 20px;
+    border-radius: 10px;
+    margin-top: 140px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.confirm-box img {
+    max-width: 150px;
+    margin-top: -120px;
+}
+
+.confirm-box h1 {
+    font-size: 20px;
+    color: #FFF;
+    margin-top: 20px;
+}
+
+.confirm-box .text-light {
+    font-size: 14px;
+    padding: 5px;
+    color: #23282F;
+}
+
+/* Menu Responsive */
+@media screen and (max-width: 900px) {
+    #main-menu {
+        padding-top: 30px;
+    }
+
+    #headerSvg img {
+        width: 45%;
+        margin-bottom: 60px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    #headerSvg {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    #main-menu {
+        padding-top: 10px;
+    }
+
+    #main-menu>a>img {
+        width: 85%;
+    }
+
+    #headerSvg img {
+        width: 50%;
+        margin-bottom: 40px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    #main-menu {
+        padding-top: 10px;
+    }
+
+    #main-menu>a>img {
+        width: 70%;
+    }
+
+    #headerSvg img {
+        width: 55%;
+        margin-bottom: 30px;
+        margin-right: 30px;
+    }
+}
+
 
 @media screen and (max-width: 768px) {
     #mainMenuContainer,
@@ -611,5 +846,60 @@ body.open #headerSvg img {
         color: white;
         position: absolute;
         font-size: 18px;
+    }
+
+    body.page-no-arc .section{
+        background-size: auto 100%;
+    }
+}
+
+@media screen and (max-width:580px) {
+
+    #country-box,
+    #city-box,
+    .dropdown-item {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0;
+        width: 100%;
+        max-height: unset !important;
+        height: 100vh;
+        height: 100%;
+        padding-bottom: 70px;
+        z-index: 1000;
+    }
+
+    #country-box:before,
+    #city-box:before,
+    .dropdown-item:before {
+        bottom: 10px;
+        left: calc(50% - 20px);
+        font-family: 'Material Icons';
+        content: "\e5cd";
+        color: #FFF;
+        position: fixed;
+        font-size: 18px;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        border-radius: 50%;
+        background-color: #23282F;
+
+    }
+}
+
+@media screen and (max-width: 425px) {
+    form .form-responsive {
+        display: block;
+    }
+
+    form .form-responsive .country-city {
+        display: block !important;
+    }
+
+    form .form-responsive #country,
+    form .form-responsive #city {
+        margin: 15px 5px;
     }
 }
