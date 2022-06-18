@@ -69,7 +69,7 @@ function loadSVGInject(svg){
         $(patternTopClip).addClass('top-clip pattern-bottom-clip').css({'background-image': bg,'-webkit-clip-path': 'url(#pattern_bottom_clip_'+clipID+')','clip-path': 'url(#pattern_bottom_clip_'+clipID+')'});
     svgElm.before(patternTopClip);
   }
-  parentSection.find('.pattern-bottom-clip').css({'height':svgHeight+'px','top':'-'+(svgHeight-1)+'px'}).attr('height',svgHeight);
+  parentSection.find('.pattern-bottom-clip').css({'height':svgHeight+'px','top':'-'+(svgHeight-2)+'px'}).attr('height',svgHeight);
 
   // console.log("prev section id: "+(ppcPrevHeightBottom ?? 0));
   // console.log(((svgElm.height()-ppcHeightTop) + prevSection.find('.pattern-prev-clip').height()));
@@ -134,7 +134,6 @@ function initHeaderFooter(){
 
   $('.section:first-child .content').css({'padding-top': headerHeight});
   $('.section:last-child .content').css({'padding-bottom': footerHeight});
-  console.log(footerHeight);
   $('.content-wrapper').css(
     {
       'margin-top': '-'+headerHeight+'px',
@@ -148,7 +147,153 @@ function initHeaderFooter(){
   }
 }
 
+function countryFilter(data){
+    return data.filter(
+        function (data) { return data.cities.length > 0 }
+    )
+}
+
+function smallPopup(content,callback) {
+    var sp = $('<div class="small-popup align-center">'+
+                        '<div class= "sp-content" ></div>'+
+                        '<span class="material-icons close-sp">close</span> '+
+                    '</div > ');
+    $('body').append(sp);
+    sp.find('.sp-content').html(content);
+    setTimeout(function(){ sp.addClass('animate-sp'); },100);
+    sp.find('.close-sp').click(function () {
+        sp.remove();
+        callback();
+    })
+}
+
+function openDialog(title,content){
+  var dialogElm= $('<div id="popup" class="overlay">'+
+                          '<div class= "popup">'+
+                          '<div class="justify-between align-center">' +
+                              '<h2></h2>' +
+                              '<a class="close">&times;</a>' +
+                          '</div>' +
+                          '<div class="content"></div>' +
+                      '</div >'+
+                  '</div >');
+  if( $('#popup').length ){
+      dialogElm= $('#popup');
+  }else{
+      $('body').append(dialogElm);
+  }
+  $('body').addClass('open-dialog');
+  dialogElm.find('h2').html(title);
+  dialogElm.find('.content').html(content);
+  dialogElm.find('.close').click(function(){
+      $('body').removeClass('open-dialog');
+  })
+}
+
+function getParentPopupPage(elm){
+  return $(elm).attr('parent-id')? $(elm).parents('#'+$(elm).attr('parent-id')) : $(elm);
+}
+
+function popupPage(elm, url){
+  var parentElm= getParentPopupPage(elm);
+  var pageElm= $('<div id="popup-page" class="overlay align-in-center">'+
+                    '<div id="page-arrow" class="page-arrow justify-between max-w1280">'+
+                      '<div class= "arrow-left align-in-center disable-selection">'+
+                        '<span class="material-icons">chevron_left</span>'+
+                      '</div>'+
+                      '<div class= "arrow-right align-in-center disable-selection">'+
+                        '<span class="material-icons">navigate_next</span>'+
+                      '</div>'+
+                    '</div>'+
+                    '<div class= "popup-page"></div>'+
+                  '</div >');
+
+  if( $('#popup-page').length ){
+      pageElm= $('#popup-page');
+  }else{
+      $('body').append(pageElm);
+  }
+
+  pageElm.click(function(){
+    removePopup();
+  })
+
+  pageElm.find('.popup-page').click(function(e){
+    e.stopPropagation();
+  })
+
+  function removePopup(){
+    pageElm.remove();
+    $('body').removeClass('open-popup-page');
+  }
+
+  function appendChild(){
+    // $.post(url,function(data){
+    pageElm.find('.popup-page').load(url,function(data){
+      // pageElm.find('.popup-page').html('').append(data);
+
+      pageElm.find('.close').click(function(e){
+        removePopup();
+      })
+    })
+  }
+
+  function prevNext(arrow){
+    var prevNextElm=
+              (arrow=='prev')?
+                $(parentElm).prev().find('.popup-page-url').length?
+                  $(parentElm).prev().find('.popup-page-url')
+                :
+                  $(parentElm).prev('.popup-page-url').length?
+                    $(parentElm).prev('.popup-page-url')
+                  :
+                    null
+              :
+                $(parentElm).next().find('.popup-page-url').length?
+                  $(parentElm).next().find('.popup-page-url')
+                :
+                  $(parentElm).next('.popup-page-url').length?
+                    $(parentElm).next('.popup-page-url')
+                  :
+                    null
+                  ;
+              ;
+
+    if(prevNextElm==null){
+      prevNextElm= (arrow=='prev') ?
+                $(parentElm).nextAll().find('.popup-page-url').last()
+                :
+                $(parentElm).prevAll().find('.popup-page-url').first()
+              ;
+    }
+    if( prevNextElm ){
+      url = prevNextElm.attr('href');
+      parentElm=getParentPopupPage(prevNextElm[0]);
+      appendChild();
+    }
+  }
+
+  pageElm.find('.arrow-left').click(function(e){
+    e.stopPropagation();
+    prevNext('prev');
+  })
+  
+  pageElm.find('.arrow-right').click(function(e){
+    e.stopPropagation();
+    prevNext('next');
+  })
+  
+  appendChild();
+
+  $('body').addClass('open-popup-page');
+}
+
 $(document).ready(function(){
+
+  if(Cookies.get('menu')){
+    $('body').addClass('open');
+  }
+
   $('.img-arc').each(function(){
     SVGInject(this);
 
@@ -163,26 +308,42 @@ $(document).ready(function(){
   $('#menu-toggle').click(function(){
     if(!$('body').hasClass('open')){
       $('body').addClass('open');
+      Cookies.set('menu', 'open', { path: '/' });
     }else{
       $('body').removeClass('open');
+      Cookies.remove('menu', { path: '/' });
     }
   })
 
   // Menu Dropdown
   $('.menu-dropdown').click(function(e){
-      e.preventDefault();
-      if($(this).hasClass('expand')){
-          $(this).removeClass('expand');
-      }else{
-          $(this).addClass('expand');
-      }
+    e.preventDefault();
+    if($(this).hasClass('expand')){
+        $(this).removeClass('expand');
+    }else{
+        $(this).addClass('expand');
+    }
+  })
+
+  $('.popup-page-url').click(function(e){
+    var elm= this;
+    var url=  $(elm).attr('href');
+    e.preventDefault();
+    popupPage(elm, url);
   })
 
   $('.content-wrapper,#headerSvg').click(function(){
     if($('body').hasClass('open')){
       $('body').removeClass('open');
+      Cookies.remove('menu', { path: '/' });
     }
   })
+
+  if (Cookies.get('zoom-info')==null) {
+      smallPopup('<font class="text-orange font-size-14"><strong>Is the text too small or too big?</strong></font><br>To zoom in and out of a page, hold down <strong>CTRL</strong> + adjust with the middle mouse wheel.',function(){
+          Cookies.set('zoom-info', 'true', { path: '/' });
+      });
+  }
 })
 
 $(window).on('resize',function(){

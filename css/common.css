@@ -36,6 +36,19 @@
     /* --grey: #292929; */
 }
 
+.bg-white{
+    background-color: white;
+}
+
+.default-bg{
+    background-image: linear-gradient(230deg, #FF7F06, #F6C80F);
+}
+
+.default-form-bg{
+    background-image: none !important;
+    background: #0b0c0e;
+}
+
 input,
 textarea {
     outline: none;
@@ -79,6 +92,10 @@ body::-webkit-scrollbar {
 
 .initials {
     text-transform: uppercase;
+}
+
+.no-wrap{
+    white-space: nowrap;
 }
 
 body {
@@ -633,6 +650,14 @@ body {
 
 .mt-0 {
     margin-top: 0px !important;
+}
+
+._mb_20 {
+    margin-bottom: -20px;
+}
+
+._mb_40 {
+    margin-bottom: -40px;
 }
 
 ._mb_100 {
@@ -1421,7 +1446,11 @@ body {
 }
 
 .text-yellow {
-    color: var(--star-gold);
+    color: var(--star-gold) !important;
+}
+
+.text-orange {
+    color: var(--orange) !important;
 }
 
 .h1 {
@@ -2075,6 +2104,10 @@ body {
     margin-right: 60px;
 }
 
+.mr-80 {
+    margin-right: 80px;
+}
+
 .mr-100 {
     margin-right: 100px;
 }
@@ -2217,6 +2250,10 @@ body {
 
 .mt-260 {
     margin-top: 260px;
+}
+
+.text-default {
+    color: #23282F;
 }
 
 .text-white {
@@ -2615,9 +2652,8 @@ main {
 
 .para {
     font-size: 14px;
-    font-weight: 200;
+    font-weight: 400;
     line-height: 1.8;
-    color: white;
     text-align: justify;
 }
 

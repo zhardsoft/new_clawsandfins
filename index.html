@@ -15,10 +15,39 @@
     <!-- JS Script -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/svg-inject.js"></script>
+    <script src="js/js-cookie.js"></script>
     <script src="js/main.js"></script>
 </head>
-<body>
-    <div class="max-w1280 margin-auto overflow-hidden">
+<body class="logged-in"> <!-- Class "logged-in" must be defined when the user is logged in -->
+
+    <!-- Logged In - Welcome Message, Company Info and Account Setting Button -->
+    <div class="nav-top justify-center">
+        <div class="nav-area max-w1280 justify-between">
+            <div class="welcome-message no-wrap">
+                <h4>Welcome Back,</h4>
+                <h3>Contact Name</h3>
+            </div>
+            <div class="align-center">
+                <div class="company-info align-center">
+                    <img src="assets/images/logo.png">
+                    <div>
+                        <h3>Company Name</h3>
+                        <span>company@gmail.com</span>
+                    </div>
+                </div>
+                <div class="nav-right align-center">
+                    <a class="nav-button align-in-center" href="">
+                        <span class="material-icons">
+                            manage_accounts
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End -->
+
+    <div class="body-content max-w1280 margin-auto overflow-hidden">
         <!-- Menu -->
         <div id="mainMenuContainer" class="main-menu-container full-height w0 fixed">
             <nav id="main-menu" role="navigation">
@@ -34,22 +63,22 @@
                     <a href="#"><img class="social-icon" src="assets/svg/pinterest-square.svg" alt="twitter"></a>
                 </div>
                 <hr>
-                <ul>
-                    <ul class="menu">
-                    <li class="menu-dropdown"><a href="">Soft-shelled mudcrabs</a></li>
-                    <li class="sub-menu">
+                <ul class="menu">
+                    <li><a href="pages/soft-shelled-mudcrabs/">Soft-shelled mudcrabs</a></li>
+                    <!-- <li class="sub-menu">
                         <ul>
-                            <li><a>Sub Menu 1</a></li>
-                            <li><a>Sub Menu 2</a></li>
+                            <li id="frozen-whole"><a class="popup-page-url" parent-id="frozen-whole" href="pages/soft-shelled-mudcrabs/pages/frozen-whole.html">Frozen - Whole</a></li>
+                            <li id="frozen-cleaned"><a class="popup-page-url" parent-id="frozen-cleaned" href="pages/soft-shelled-mudcrabs/pages/frozen-cleaned.html">Frozen - Cleaned</a></li>
+                            <li id="alive"><a class="popup-page-url" parent-id="alive" href="pages/soft-shelled-mudcrabs/pages/alive.html">Alive</a></li>
+                            <li id="frozen-deepfried"><a class="popup-page-url" parent-id="frozen-deepfried" href="pages/soft-shelled-mudcrabs/pages/frozen-deepfried.html">Frozen - Deep Fried</a></li>
                         </ul>
-                    </li>
-                    <li><a href="#">Hard-shelled mudcrabs</a></li>
-                    <li><a href="#">Information</a></li>
-                    <li><a href="#">Where to buy</a></li>
-                    <li><a href="#">Contact Us</a></li>
+                    </li> -->
+                    <li><a href="pages/hard-shelled-mudcrabs/">Hard-shelled mudcrabs</a></li>
+                    <li><a href="pages/information/">Information</a></li>
+                    <li><a href="pages/where-to-buy/">Where to buy</a></li>
+                    <li><a href="pages/contact-us.html">Contact Us</a></li>
                     <li><a href="pages/become-distributor/">Become distributor</a></li>
-                    <li><a href="pages/login/index.html">Log In</a></li>
-                </ul>
+                    <li><a href="pages/login/">Log In</a></li>
                 </ul>
             </nav>
             <div class="menu-button-container z-index-5">
@@ -58,7 +87,7 @@
         </div>
 
         <!-- Header -->
-        <header class="full-width text-white flex justify-between relative">
+        <header class="full-width text-white flex justify-between relative _mt_100">
         <div id="placeholder1"></div>
             <div id="headerSvg" class="_50-width z-index-2 absolute top-left">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 628.99 462.748">
@@ -112,7 +141,7 @@
                 </svg>
                 
                 <div class="absolute top-left _85-width _85-height align-in-center">
-                    <a href="" class="full-width align-in-center"><img class="_40-width mb-40 mr-15 sm_mb-20 mr-5" src="assets/images/logo.png"></a>
+                    <a href="" class="full-width align-in-center"><img class="_40-width _mb_40 mr-80 sm_mb-20 mr-5" src="assets/images/logo.png"></a>
                 </div>
 
             </div>
@@ -211,7 +240,7 @@
                                 </div>
                                 <div class="flex-column _50-width md_text-center md_90-width">
                                     <h2 class="h2 text-yellow sm_font-size-30">ABOUT US</h2>
-                                    <p class="para sm_font-size-11">
+                                    <p class="para text-white sm_font-size-11">
                                         Pete's Claws and Fins is a high-tech producer of ecological seafood. We use state-of-the-art, highly
                                         computerized equipment to monitor and manage our seafood to ensure it is of the highest possible
                                         quality. All equipment we use is developed by ourselves in-house. We are the only company operating such
@@ -234,7 +263,7 @@
                                 <img class="full-width circle border-15-orange sm_border-10 shadow_1" src="assets/images/image_2.jpg">
                             </div>
                             <h1 class="h1 sm_font-size-25 text-white sm_text-center">ECOLOGICAL PRODUCTION</h1>
-                            <p class="para sm_font-size-11 sm_text-center">
+                            <p class="para text-white sm_font-size-11 sm_text-center">
                                 All our seafoods are ecologically produced. Our endeavor is not using resources from the wildlife. We are only
                                 using farm-raised animals for our production. Our production is free from using harmful chemicals that can
                                 contaminate the environment or the food products we produce. Instead, we use natural minerals and bacteria to
@@ -245,7 +274,7 @@
                                     <img class="full-width circle border-15-orange sm_border-10 shadow_1" src="assets/images/image_2.jpg">
                                 </div>
                                 <div class="flex-column _50-width sm_text-center sm_90-width">
-                                    <p class="para sm_font-size-11">
+                                    <p class="para text-white sm_font-size-11">
                                         We recycle all organic waste we produce, also, we obtain organic waste from other farms, restaurants,
                                         and food markets. The organic waste we collect allows a particular larva from the <em
                                             class="text-yellow">Hermetia illucens</em> species, known commonly as black soldier fly larva
@@ -259,14 +288,14 @@
                         </div>
                     </div>
                 </div>
-                <img img-arc="1" class="img-arc" src="assets/arcs/arc_1.svg"/>
+                <img img-arc="1" class="img-arc" src="assets/arcs/arc 15.svg"/>
             </section>
             <section class="section" data-clip-id="3" style="background-image: url(assets/bg/pattern_bg3.jpg);">
                 <div class="content">
                     <div class="full-width align-in-center pt-100 pb-120">
                         <div class="_75-width flex-column z-index-1 justify-center sm_90-width sm_align-center sm_mt_60">
                             <h1 class="h1 text-yellow sm_font-size-30 text-right sm_text-center">LOCAL COMMUNITY ENGAGEMENT</h1>
-                            <p class="para sm_font-size-11 text-right sm_text-center">
+                            <p class="para text-white sm_font-size-11 text-right sm_text-center">
                                 It is in our core believe that if you benefit the local community, the people there will add value to your
                                 business as well. For every site we establish a manufacturing facility, our project will add value to the
                                 community as whole. We will provide jobs for hundreds of local residents with positions available within our

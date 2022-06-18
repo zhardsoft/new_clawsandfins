@@ -18,10 +18,61 @@
     <!-- JS Script -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../js/svg-inject.js"></script>
+    <script src="../../js/js-cookie.js"></script>
     <script src="../../js/main.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
     <style>
+        .logo {
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 150px;
+            height: 150px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            margin-bottom: 30px;
+            cursor: pointer;
+        }
+
+        .logo img {
+            display: none;
+        }
+
+        .logo span {
+            font-size: 45px;
+            color: white;
+        }
+
+        .logo button {
+            display: none;
+            margin-top: 20px;
+            background: transparent;
+            border: 1px solid #FFF;
+            color: #FFF;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .logo.image-opened {
+            background: transparent;
+            border: 0;
+            width: 150px;
+            height: auto;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        .logo.image-opened img {
+            display: block;
+        }
+
+        .logo.image-opened span {
+            display: none;
+        }
+
+        .logo.image-opened button {
+            display: block;
+        }
         .visiting-address{
             height: 300px;
         }
@@ -42,7 +93,7 @@
         <!-- Menu -->
         <div id="mainMenuContainer" class="main-menu-container full-height w0 fixed">
             <nav id="main-menu" role="navigation">
-                <a href="" class="full-width align-in-center">
+                <a href="../../" class="full-width align-in-center">
                     <img class="mb-10" src="../../assets/images/logo.png" alt="profile photo" width="150">
                 </a>
                 <h2 class="font-size-20 font-weight-400 text-white text-center">Pete's Claws & Fins</h2>
@@ -56,19 +107,13 @@
                 <hr>
                 <ul>
                     <ul class="menu">
-                        <li class="menu-dropdown"><a href="">Soft-shelled mudcrabs</a></li>
-                        <li class="sub-menu">
-                            <ul>
-                                <li><a>Sub Menu 1</a></li>
-                                <li><a>Sub Menu 2</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Hard-shelled mudcrabs</a></li>
-                        <li><a href="#">Information</a></li>
-                        <li><a href="#">Where to buy</a></li>
-                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="../soft-shelled-mudcrabs/">Soft-shelled mudcrabs</a></li>
+                        <li><a href="../hard-shelled-mudcrabs/">Hard-shelled mudcrabs</a></li>
+                        <li><a href="../information/">Information</a></li>
+                        <li><a href="../where-to-buy/">Where to buy</a></li>
+                        <li><a href="../contact-us.html">Contact Us</a></li>
                         <li><a href="../become-distributor/">Become distributor</a></li>
-                        <li><a href="../login/index.html">Log In</a></li>
+                        <li><a href="../login/">Log In</a></li>
                     </ul>
                 </ul>
             </nav>
@@ -78,7 +123,7 @@
         </div>
 
         <!-- Header -->
-        <header class="full-width text-white flex justify-between relative">
+        <header class="full-width text-white flex justify-between relative _mt_100">
             <div id="placeholder1"></div>
             <div id="headerSvg" class="_50-width z-index-2 absolute top-left">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -150,7 +195,7 @@
                 </svg>
 
                 <div class="absolute top-left _85-width _85-height align-in-center">
-                    <a href="" class="full-width align-in-center"><img class="_40-width mb-40 mr-15 sm_mb-20 mr-5"
+                    <a href="../../" class="full-width align-in-center"><img class="_40-width _mb_40 mr-80 sm_mb-20 mr-5"
                             src="../../assets/images/logo.png"></a>
                 </div>
 
@@ -572,11 +617,7 @@
         var countrySelectedKey=0;
         var countrySelectedID=0;
         var citySelectedID=0;
-        function countryFilter(data){
-            return data.filter(
-                function (data) { return data.cities.length > 0 }
-            )
-        }
+        
         $.getJSON('../../library/country-city/countries+cities.json', function (data) {
             data = countryFilter(data);
             $.each(data, function (key, val) {
