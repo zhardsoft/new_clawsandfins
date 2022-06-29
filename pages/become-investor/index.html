@@ -20,9 +20,99 @@
     <script src="../../js/svg-inject.js"></script>
     <script src="../../js/js-cookie.js"></script>
     <script src="../../js/main.js?v=5"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    <style>
+        .logo {
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 150px;
+            height: 150px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            margin-bottom: 30px;
+            cursor: pointer;
+        }
+
+        .logo img {
+            display: none;
+        }
+
+        .logo span {
+            font-size: 45px;
+            color: white;
+        }
+
+        .logo + button {
+            display: none;
+            margin-top: 20px;
+            background: transparent;
+            border: 1px solid #FFF;
+            color: #FFF;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .logo.image-opened {
+            background:#585858;
+            border: 0;
+            width: 150px;
+            height: 150px;
+            flex-direction: column;
+            margin-bottom: 0px;
+            overflow: hidden;
+        }
+
+        .logo.image-opened img {
+            display: block;
+        }
+
+        .logo.image-opened span {
+            display: none;
+        }
+
+        .logo.image-opened + button {
+            display: block;
+        }
+
+        .visiting-address {
+            height: 300px;
+        }
+
+        .visiting-address #map {
+            height: 100%;
+        }
+
+        .map-marker-label {
+            display: block;
+            border-radius: 5px;
+            padding: 2px 8px;
+        }
+
+        .currency-field{
+            position: relative;
+        }
+        .currency-field:before{
+            content: attr(prefix);
+            position: absolute;
+            left: 10px;
+            top: calc(50% - 1px);
+            transform: translatey(-50%);
+            color: #c8c8c8;
+            font-size: 14px;
+        }
+
+        .currency-field input{
+            padding-left: 45px;
+        }
+
+        .form-container{
+            background: #4b4b4b;
+        }
+    </style>
 </head>
 
-<body>
+<body class="page-no-arc">
     <div class="body-content max-w1280 margin-auto overflow-hidden">
         <!-- Menu -->
         <div id="mainMenuContainer" class="main-menu-container full-height w0 fixed">
@@ -41,31 +131,18 @@
                 <hr>
                 <ul>
                     <ul class="menu">
-                        <!-- <li class="menu-dropdown"><a href="">Soft-shelled mudcrabs</a></li> -->
-                        <li><a href="">Soft-shelled mudcrabs</a></li>
-                        <li class="sub-menu display-block">
-                            <ul>
-                                <li id="frozen-whole"><a class="popup-page-url" parent-id="frozen-whole"
-                                        href="../../pages/soft-shelled-mudcrabs/pages/frozen-whole.html #content">Frozen - Whole</a>
-                                </li>
-                                <li id="frozen-cleaned"><a class="popup-page-url" parent-id="frozen-cleaned"
-                                        href="../../pages/soft-shelled-mudcrabs/pages/frozen-cleaned.html #content">Frozen -
-                                        Cleaned</a></li>
-                                <li id="alive"><a class="popup-page-url" parent-id="alive"
-                                        href="../../pages/soft-shelled-mudcrabs/pages/alive.html #content">Alive</a></li>
-                                <li id="frozen-deepfried"><a class="popup-page-url" parent-id="frozen-deepfried"
-                                        href="../../pages/soft-shelled-mudcrabs/pages/frozen-deepfried.html #content">Frozen - Deep
-                                        Fried</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="../soft-shelled-mudcrabs/">Soft-shelled mudcrabs</a></li>
                         <li><a href="../hard-shelled-mudcrabs/">Hard-shelled mudcrabs</a></li>
                         <li><a href="../information/">Information</a></li>
                         <li><a href="../where-to-buy/">Where to buy</a></li>
                         <li><a href="../contact-us.html">Contact us</a></li>
                         <li class="distributor-investor-menu display-none"><a href="../updates.html">Updates</a></li>
-                        <li class="distributor-investor-menu display-none"><a href="../picture-gallery.html">Picture Gallery</a></li>
-                        <li class="distributor-investor-menu display-none"><a href="../future-ideas.html">Future Ideas</a></li>
-                        <li class="distributor-investor-menu display-none"><a href="../financial-updates.html">Financial Updates</a></li>
+                        <li class="distributor-investor-menu display-none"><a href="../picture-gallery.html">Picture
+                                Gallery</a></li>
+                        <li class="distributor-investor-menu display-none"><a href="../future-ideas.html">Future
+                                Ideas</a></li>
+                        <li class="distributor-investor-menu display-none"><a href="../financial-updates.html">Financial
+                                Updates</a></li>
                         <li><a href="../become-distributor/">Become a distributor</a></li>
                         <li><a href="../become-investor/">Become an investor</a></li>
                         
@@ -105,7 +182,7 @@
             </div>
         </div>
         <!-- >>> End -->
-        
+
         <!-- After Login - Distributor/Inverstor Topbar >>> -->
         <div class="nav-top justify-center nav-distributor-investor display-none">
             <div class="nav-area max-w1280 justify-between align-center">
@@ -136,7 +213,7 @@
             </div>
         </div>
         <!-- >>> End -->
-        
+
         <!-- Temporary Script for Logged in User >>> -->
         <script>
             if (Cookies.get('logged-in')) {
@@ -224,8 +301,8 @@
                 </svg>
 
                 <div class="absolute top-left _85-width _85-height align-in-center">
-                    <a href="../../" class="full-width align-in-center"><img class="_40-width _mb_40 mr-80 sm_mb-20 mr-5"
-                            src="../../assets/images/logo.png"></a>
+                    <a href="../../" class="full-width align-in-center"><img
+                            class="_40-width _mb_40 mr-80 sm_mb-20 mr-5" src="../../assets/images/logo.png"></a>
                 </div>
 
             </div>
@@ -323,189 +400,88 @@
 
         <!-- Content -->
         <div class="content-wrapper">
-            <section class="section" data-clip-id="1" style="background-image: url(../../assets/bg/Grey\ Background\ \(14\).png);">
-                <div class="content full-width">
+            <section class="section" data-clip-id="1" style="background-image: url('../../assets/bg/grey4.jpg');">
+                <div class="content">
                     <div class="full-width align-in-center pb-120">
-                        <div class="_75-width flex-column z-index-1 justify-center md_90-width md_align-center">
-                            <h1 class="h1 text-yellow sm_font-size-35 sm_mt-40 text-center">What makes our
-                            crabs so special</h1>
-                            <div class="full-width mt-50">
-                                <video class="full-width" controls>
-                                    <source src="../../assets/videos/crabs.mp4" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="section" data-clip-id="2" style="background-image: url(../../assets/bg/Grey\ Background\ \(2\).png);">
-                <div class="content">
-                    <div class="full-width align-in-center pb-40">
-                        <div class="_75-width flex-column z-index-1 justify-center sm_90-width sm_align-center mt-20 sm_mt-10">
-                            <h1 class="h1 sm_font-size-25 text-yellow text-center">What is a Softshelled mud crab?</h1>
-                            <p class="para text-white sm_font-size-11 sm_text-center">
-                                All our seafoods are ecologically produced. Our endeavor is not using resources from the
-                                wildlife. We are only
-                                using farm-raised animals for our production. Our production is free from using harmful
-                                chemicals that can
-                                contaminate the environment or the food products we produce. Instead, we use natural
-                                minerals and bacteria to
-                                break down our waste products into harmless, biodegradable compounds.
-                            </p>
-                            <div class="full-width justify-between align-center sm_flex-column sm_justify-center">
-                                <div class="w400 p-30 sm_p-10 sm_w250">
-                                    <img class="full-width circle border-15-orange sm_border-10 shadow_1"
-                                        src="../../assets/images/image_2.jpg">
+                        <div class="_75-width md_90-width md_align-center flex-column justify-center max-w700">
+                            <h1 class="h1 text-yellow sm_font-size-35 sm_mt-60 text-center">Become an Investor
+                            </h1>
+                            <span class="h4 text-white text-center mb-30">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+                            aliqua.</span>
+                            <form action="confirm-email.html" method="post" onsubmit="return inputValidation(this)">
+                                <div class="form-container">
+                                    <div class="full-width text-center">
+                                        <div class="logo-container align-in-center flex-column mt-20">
+                                            <label>Your Photo (Optional)</label>
+                                            <div class="logo d-flex align-in-center">
+                                                <img id="logo-img" alt="logo-img">
+                                                <span class="material-icons">
+                                                    image
+                                                </span>
+                                            </div>
+                                            <button id="remove-logo" type="button">Remove Photo</button>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex full-width form-responsive">
+                                        <div class="input-text" required>
+                                            <label label="(Must be filled in)">First Name</label>
+                                            <input type="text" id="first-name" placeholder="First Name">
+                                        </div>
+                                        <div class="input-text" required>
+                                            <label label="(Must be filled in)">Last Name</label>
+                                            <input type="text" id="last-name" placeholder="Last Name">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex full-width form-responsive">
+                                        <div class="input-text" required>
+                                            <label label="(Must be filled in)">Email</label>
+                                            <input type="email" id="email" placeholder="Email">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex full-width form-responsive">
+                                        <div class="input-text" required>
+                                            <label label="(Must be filled in)">Password</label>
+                                            <input type="password" id="password" placeholder="Password">
+                                        </div>
+                                        <div class="input-text" required>
+                                            <label label="(Must be filled in)">Confirm Password</label>
+                                            <input type="password" id="confirm-password" placeholder="Confirm Password">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex full-width form-responsive">
+                                        <div class="input-textarea" required>
+                                            <label style="font-size: 14px" label="(Must be filled in)">Address</label>
+                                            <textarea id="address" placeholder="Address"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex full-width form-responsive">
+                                        <div class="input-text" required>
+                                            <label label="(Must be filled in)">Size of possible investment</label>
+                                            <div class="currency-field" prefix="US$">
+                                                <input class="format-currency" type="text" id="investment" parent=".input-text" placeholder="0">
+                                            </div>
+                                            <!-- <div class="input-group d-flex-important align-center full-width">
+                                                <div class="label">US$</div>
+                                                <input class="number-format" type="text" id="investment" placeholder="0">
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                    <div class="d-flex full-width form-responsive">
+                                        <div class="input-textarea" required>
+                                            <label label="(Must be filled in)">Do you have any "special skills" that you would be happy offer us? Or anything else, please write us a few lines below.</label>
+                                            <textarea id="skills" placeholder="Special skills"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex full-width justify-center">
+                                        <div class="button-secondary">
+                                            <button type="submit">SUBMIT</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="flex-column _50-width sm_text-center sm_90-width">
-                                    <p class="para text-white sm_font-size-11">
-                                        We recycle all organic waste we produce, also, we obtain organic waste from
-                                        other farms, restaurants,
-                                        and food markets. The organic waste we collect allows a particular larva from
-                                        the <em class="text-yellow">Hermetia illucens</em> species, known commonly as
-                                        black soldier fly larva
-                                        (BSFL), to feeds on it and grow fatter. When the larva has developed to a pupa,
-                                        it is cleaned, cooked
-                                        and grided to a paste used as a high-quality protein and lipids perfectly suited
-                                        as ecological animal
-                                        feed, reducing the need for wild-sourced feed ingredients such as fishmeal which
-                                        contributes to the
-                                        global overfishing.
-                                    </p>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-                <img img-arc="1" class="img-arc" src="../../assets/arcs/arc 2.svg" />
-            </section>
-            <section class="section" data-clip-id="3" style="background-image: url(../../assets/bg/Grey\ Background\ \(4\).png);">
-                <div class="content">
-                    <div class="full-width align-in-center pt-100 pb-60">
-                        <div
-                            class="_75-width flex-column z-index-1 justify-center sm_90-width sm_align-center sm_mt_60">
-                            <h1 class="h1 text-white sm_font-size-30 text-center">Nutrition</h1>
-                            <p class="para text-white sm_font-size-11 text-right sm_text-center">
-                                It is in our core believe that if you benefit the local community, the people there will
-                                add value to your
-                                business as well. For every site we establish a manufacturing facility, our project will
-                                add value to the
-                                community as whole. We will provide jobs for hundreds of local residents with positions
-                                available within our
-                                production, sales, administration, and management teams. We will also offer hundreds of
-                                local farmers
-                                opportunities to join our supply network, providing training, coaching, and financial
-                                support to help them adapt
-                                to a more intensive and efficient farming system. Through our research and development,
-                                anything learned or
-                                discovered will be shared with our farmers to produce more efficiently and a healthier
-                                product. One among many
-                                different local benefitting activities, is that we will arrange cleanup days where we
-                                offer students an extra
-                                income for their effort as well as courses in environment know-how and teach them the
-                                importance of keeping the
-                                environment healthy.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <img img-arc="2" class="img-arc" src="../../assets/arcs/arc 15.svg" />
-            </section>
-            <section class="section" data-clip-id="4" style="background-image: url(../../assets/bg/Grey\ Background\ \(15\).png);">
-                <div class="content">
-                    <div class="full-width align-in-center pt-100 pb-10">
-                        <div
-                            class="_75-width flex-column z-index-1 justify-center sm_90-width sm_align-center sm_mt_60">
-                            <h1 class="h1 text-white sm_font-size-30 text-center">Production</h1>
-                            <p class="para text-white sm_font-size-11 text-right sm_text-center">
-                                It is in our core believe that if you benefit the local community, the people there will
-                                add value to your
-                                business as well. For every site we establish a manufacturing facility, our project will
-                                add value to the
-                                community as whole. We will provide jobs for hundreds of local residents with positions
-                                available within our
-                                production, sales, administration, and management teams. We will also offer hundreds of
-                                local farmers
-                                opportunities to join our supply network, providing training, coaching, and financial
-                                support to help them adapt
-                                to a more intensive and efficient farming system. Through our research and development,
-                                anything learned or
-                                discovered will be shared with our farmers to produce more efficiently and a healthier
-                                product. One among many
-                                different local benefitting activities, is that we will arrange cleanup days where we
-                                offer students an extra
-                                income for their effort as well as courses in environment know-how and teach them the
-                                importance of keeping the
-                                environment healthy.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <img img-arc="3" class="img-arc" src="../../assets/arcs/arc 10.svg" />
-            </section>
-            <section class="section" data-clip-id="5" style="background-image: url(../../assets/bg/Grey\ Background\ \(3\).png);">
-                <div class="content">
-                    <div class="full-width align-in-center pt-100 pb-60">
-                        <div class="_75-width flex-column z-index-1 justify-center sm_90-width sm_align-center sm_mt_60">
-                            <h1 class="h1 text-yellow sm_font-size-30 text-center mt-60">We don't harm our
-                            crabs.</h1>
-                            <p class="para text-white sm_font-size-11 text-right sm_text-center">
-                                It is in our core believe that if you benefit the local community, the people there will
-                                add value to your
-                                business as well. For every site we establish a manufacturing facility, our project will
-                                add value to the
-                                community as whole. We will provide jobs for hundreds of local residents with positions
-                                available within our
-                                production, sales, administration, and management teams. We will also offer hundreds of
-                                local farmers
-                                opportunities to join our supply network, providing training, coaching, and financial
-                                support to help them adapt
-                                to a more intensive and efficient farming system. Through our research and development,
-                                anything learned or
-                                discovered will be shared with our farmers to produce more efficiently and a healthier
-                                product. One among many
-                                different local benefitting activities, is that we will arrange cleanup days where we
-                                offer students an extra
-                                income for their effort as well as courses in environment know-how and teach them the
-                                importance of keeping the
-                                environment healthy.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <img img-arc="4" class="img-arc" src="../../assets/arcs/arc 13.svg" />
-            </section>
-            <section class="section" data-clip-id="6" style="background-image: url(../../assets/bg/pattern_bg4.jpg);">
-                <div class="content">
-                    <div class="full-width align-in-center pt-100 pb-60">
-                        <div class="_75-width flex-column z-index-1 justify-center sm_90-width sm_align-center sm_mt_60">
-                            <h1 class="h1 text-white sm_font-size-30 text-center mt-60">Competitor's chemically dissolved crab shells</h1>
-                            <p class="para text-white sm_font-size-11 text-right sm_text-center">
-                                It is in our core believe that if you benefit the local community, the people there will
-                                add value to your
-                                business as well. For every site we establish a manufacturing facility, our project will
-                                add value to the
-                                community as whole. We will provide jobs for hundreds of local residents with positions
-                                available within our
-                                production, sales, administration, and management teams. We will also offer hundreds of
-                                local farmers
-                                opportunities to join our supply network, providing training, coaching, and financial
-                                support to help them adapt
-                                to a more intensive and efficient farming system. Through our research and development,
-                                anything learned or
-                                discovered will be shared with our farmers to produce more efficiently and a healthier
-                                product. One among many
-                                different local benefitting activities, is that we will arrange cleanup days where we
-                                offer students an extra
-                                income for their effort as well as courses in environment know-how and teach them the
-                                importance of keeping the
-                                environment healthy.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <img img-arc="5" class="img-arc" src="../../assets/arcs/arc 6.svg" />
             </section>
         </div>
 
@@ -660,6 +636,79 @@
             </svg>
         </footer>
     </div>
+
+    <input id="logo-file" class="display-none" type="file" accept="image/*" onchange="loadFile(event)">
+
+    <script>
+        var loadFile = function (event) {
+            var output = $('#logo-img');
+            var reader = new FileReader();
+            reader.onload = function () {
+                output.attr('src', reader.result).parent().addClass('image-opened');
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        };
+    </script>
+
+    <script>
+        function inputValidation(form) {
+            var errMsgCount = 0;
+            $(form).find('.input-text[required] input, .input-textarea[required] textarea').each(function () {
+                var elm = $(this);
+                var parentElm = elm.attr('parent')? elm.parents(elm.attr('parent')) :elm.parent();
+                if (elm.val() == '') {
+                    errMsgCount++;
+                    parentElm.addClass('input-error');
+                    if (parentElm.find('.err-msg').length == 0) {
+                        var inpErr = document.createElement('span');
+                        $(inpErr).addClass('err-msg').html('Required');
+                        parentElm.append(inpErr);
+                    }
+                    elm.keyup(function () {
+                        $(this).parents('.input-error').removeClass('input-error');
+                        $(this).next('.err-msg').remove();
+                    })
+                    if (errMsgCount == 1) {
+                        elm.focus();
+                    }
+
+                }
+
+                if (($('#password').val() != $('#confirm-password').val()) && errMsgCount == 0) {
+                    openDialog('Password', "Password doesn't match");
+                    $('#password').focus();
+                    errMsgCount++;
+                }
+            })
+
+            if (errMsgCount > 0) {
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+    
+    <script>
+
+        $(function () {
+
+            $('.checkbox').click(function () {
+                $(this).find('input[type=checkbox]').prop('checked', !$(this).find('input[type=checkbox]').prop('checked')).change();
+            })
+
+            $('.logo').click(function () {
+                $('#logo-file').click();
+            })
+
+            $('#remove-logo').click(function (e) {
+                e.stopPropagation();
+                $('#logo-img').attr('src', '').parent().removeClass('image-opened');
+            })
+
+        })
+
+    </script>
 </body>
 
 </html>

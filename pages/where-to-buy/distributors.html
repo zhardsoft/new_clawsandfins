@@ -7,7 +7,7 @@
 
     <!-- Style -->
     <link rel="stylesheet" href="../../css/common.css">
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/style.css?v=5">
 
     <!-- Icon -->
     <link rel="stylesheet" href="../../assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -19,7 +19,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../js/svg-inject.js"></script>
     <script src="../../js/js-cookie.js"></script>
-    <script src="../../js/main.js"></script>
+    <script src="../../js/main.js?v=5"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
     <style>
@@ -36,11 +36,37 @@
             border-radius: 5px;
             padding: 2px 8px;
         }
+
+        .card-highlight{
+            background-color: rgb(255,212,171);
+            -webkit-animation: colorhighlight 1s linear infinite;
+            animation: colorhighlight 1s linear infinite;
+        }
+
+        @-webkit-keyframes colorhighlight {
+            0% {
+                background-color: #dbdbdb;
+            }
+
+            100% {
+                background-color: #FFD4AB;
+            }
+        }
+
+        @keyframes colorhighlight {
+            0% {
+                background-color: #dbdbdb;
+            }
+
+            100% {
+                background-color: #FFD4AB;
+            }
+        }
     </style>
 </head>
 
 <body class="page-no-arc">
-    <div class="max-w1280 margin-auto overflow-hidden">
+    <div class="body-content max-w1280 margin-auto overflow-hidden">
         <!-- Menu -->
         <div id="mainMenuContainer" class="main-menu-container full-height w0 fixed">
             <nav id="main-menu" role="navigation">
@@ -62,9 +88,14 @@
                         <li><a href="../hard-shelled-mudcrabs/">Hard-shelled mudcrabs</a></li>
                         <li><a href="../information/">Information</a></li>
                         <li><a href="../where-to-buy/">Where to buy</a></li>
-                        <li><a href="../contact-us.html">Contact Us</a></li>
-                        <li><a href="../become-distributor/">Become distributor</a></li>
-                        <li><a href="../login/">Log In</a></li>
+                        <li><a href="../contact-us.html">Contact us</a></li>
+                        <li class="distributor-investor-menu display-none"><a href="../updates.html">Updates</a></li>
+                        <li class="distributor-investor-menu display-none"><a href="../picture-gallery.html">Picture Gallery</a></li>
+                        <li class="distributor-investor-menu display-none"><a href="../future-ideas.html">Future Ideas</a></li>
+                        <li class="distributor-investor-menu display-none"><a href="../financial-updates.html">Financial Updates</a></li>
+                        <li><a href="../become-distributor/">Become a distributor</a></li>
+                        <li><a href="../become-investor/">Become an investor</a></li>
+                        
                     </ul>
                 </ul>
             </nav>
@@ -72,6 +103,80 @@
                 <button id="menu-toggle">M<br>E</br>N<br>U</button>
             </div>
         </div>
+
+        <!-- Visitor Topbar >>> -->
+        <div class="nav-top justify-center nav-visitor">
+            <div class="nav-area max-w1280 justify-between align-center">
+                <div class="welcome-message no-wrap">
+                    <h4>Welcome,</h4>
+                    <h3>Visitor</h3>
+                </div>
+                <div class="zoom-info-button">
+                    <button onclick="zoomNotif(0)">Content too small or big?</button>
+                </div>
+                <div class="align-center">
+                    <div class="company-info align-center">
+                        <div class="menu-dropdown-overlay">
+                            <ul>
+                                <li class="disable-menu"><a>Account Info</a></li>
+                                <li class="login-menu"><a href="../login/">Log in</a></li>
+                            </ul>
+                        </div>
+                        <div class="text-right">
+                            <h3>Visitor</h3>
+                            <span class="user-status">Unknown</span>
+                        </div>
+                        <span>V</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- >>> End -->
+        
+        <!-- After Login - Distributor/Inverstor Topbar >>> -->
+        <div class="nav-top justify-center nav-distributor-investor display-none">
+            <div class="nav-area max-w1280 justify-between align-center">
+                <div class="welcome-message no-wrap">
+                    <h4>Welcome Back,</h4>
+                    <h3>Contact Name</h3>
+                </div>
+                <div class="zoom-info-button">
+                    <button onclick="zoomNotif(0)">Content too small or big?</button>
+                </div>
+                <div class="align-center">
+                    <div class="company-info align-center">
+                        <div class="menu-dropdown-overlay">
+                            <ul>
+                                <li><a href="../account">Account Info</a></li>
+                                <li><a href="../account/add-user.html">Add User</a></li>
+                                <li class="md-divider"></li>
+                                <li class="logout-menu display-none"><a href="../logout.html">Log out</a></li>
+                            </ul>
+                        </div>
+                        <div class="text-right">
+                            <h3>Company Name</h3>
+                            <span class="user-status">Candidate</span>
+                        </div>
+                        <img src="../../assets/images/logo.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- >>> End -->
+        
+        <!-- Temporary Script for Logged in User >>> -->
+        <script>
+            if (Cookies.get('logged-in')) {
+                $('.distributor-investor-menu').removeClass('display-none');
+                $('.distributor-investor-menu').nextAll().hide();
+                $('.distributor-investor-menu').show();
+                $('.login-menu').hide();
+                $('.logout-menu').show();
+                $('.nav-visitor').addClass('display-none');
+                $('.nav-distributor-investor').removeClass('display-none');
+            }
+        </script>
+        <!-- >>> End -->
 
         <!-- Header -->
         <header class="full-width text-white flex justify-between relative _mt_100">
@@ -253,7 +358,7 @@
                                 <h1 class="h1 text-yellow sm_font-size-35 text-center mt-60">Distributor in United States</h1>
                                 <div class="banner-info justify-between align-center mt-40">
                                     <div>Do you want to be our distributor in United States?</div>
-                                    <a>Become a Distributor</a>
+                                    <a href="../become-distributor/">Become a Distributor</a>
                                 </div>
                                 <div class="mt-20">
                                     <div id="map" style="height: 400px;"></div>
@@ -268,23 +373,23 @@
                                             <div class="info-header justify-between">
                                                 <div class="info-name">
                                                     <span>Nevada</span>
-                                                    <h2>Company Name</h2>
+                                                    <h2>Company Name 1</h2>
                                                     <h4>Contact Name</h4>
                                                 </div>
                                                 <div class="contact-button align-center">
                                                     <div class="call-button">
-                                                        <button>
+                                                        <a href="tel:+1234567890987">
                                                             <span class="material-icons">
                                                                 call
                                                             </span>
-                                                        </button>
+                                                        </a>
                                                     </div>
                                                     <div class="map-button">
-                                                        <button class="map">
+                                                        <a class="map">
                                                             <span class="material-icons">
                                                                 map
                                                             </span>
-                                                        </button>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -320,23 +425,23 @@
                                             <div class="info-header justify-between">
                                                 <div class="info-name">
                                                     <span>Wyoming</span>
-                                                    <h2>Company Name</h2>
+                                                    <h2>Company Name 2</h2>
                                                     <h4>Contact Name</h4>
                                                 </div>
                                                 <div class="contact-button align-center">
                                                     <div class="call-button">
-                                                        <button>
+                                                        <a href="tel:+1234567890987">
                                                             <span class="material-icons">
                                                                 call
                                                             </span>
-                                                        </button>
+                                                        </a>
                                                     </div>
                                                     <div class="map-button">
-                                                        <button class="map">
+                                                        <a class="map">
                                                             <span class="material-icons">
                                                                 map
                                                             </span>
-                                                        </button>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -372,23 +477,23 @@
                                             <div class="info-header justify-between">
                                                 <div class="info-name">
                                                     <span>Oregon</span>
-                                                    <h2>Company Name</h2>
+                                                    <h2>Company Name 3</h2>
                                                     <h4>Contact Name</h4>
                                                 </div>
                                                 <div class="contact-button align-center">
                                                     <div class="call-button">
-                                                        <button>
+                                                        <a href="tel:+1234567890987">
                                                             <span class="material-icons">
                                                                 call
                                                             </span>
-                                                        </button>
+                                                        </a>
                                                     </div>
                                                     <div class="map-button">
-                                                        <button class="map">
+                                                        <a class="map">
                                                             <span class="material-icons">
                                                                 map
                                                             </span>
-                                                        </button>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -424,23 +529,23 @@
                                             <div class="info-header justify-between">
                                                 <div class="info-name">
                                                     <span>New Mexico</span>
-                                                    <h2>Company Name</h2>
+                                                    <h2>Company Name 4</h2>
                                                     <h4>Contact Name</h4>
                                                 </div>
                                                 <div class="contact-button align-center">
                                                     <div class="call-button">
-                                                        <button>
+                                                        <a href="tel:+1234567890987">
                                                             <span class="material-icons">
                                                                 call
                                                             </span>
-                                                        </button>
+                                                        </a>
                                                     </div>
                                                     <div class="map-button">
-                                                        <button class="map">
+                                                        <a class="map">
                                                             <span class="material-icons">
                                                                 map
                                                             </span>
-                                                        </button>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -476,23 +581,23 @@
                                             <div class="info-header justify-between">
                                                 <div class="info-name">
                                                     <span>Texas</span>
-                                                    <h2>Company Name</h2>
+                                                    <h2>Company Name 5</h2>
                                                     <h4>Contact Name</h4>
                                                 </div>
                                                 <div class="contact-button align-center">
                                                     <div class="call-button">
-                                                        <button>
+                                                        <a href="tel:+1234567890987">
                                                             <span class="material-icons">
                                                                 call
                                                             </span>
-                                                        </button>
+                                                        </a>
                                                     </div>
                                                     <div class="map-button">
-                                                        <button class="map">
+                                                        <a class="map">
                                                             <span class="material-icons">
                                                                 map
                                                             </span>
-                                                        </button>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -686,6 +791,18 @@
     <script>
 
         let map, latlng, marker, infoWindow, geocoder;
+
+        $(function(){
+            $('.distributor-item').click(function(){
+                var id=$(this).attr('id');
+                var cn=$(this).find('.info-header h2').html();
+                var index = markers.findIndexBy('title', '#'+id);
+                infoWindow.setContent(cn);
+                infoWindow.open(map, markers[index].marker);
+                window.location.href = '#map';
+                $(document).scrollTop($(document).scrollTop() - 100);
+            })
+        })
         
         function initMap() {
             latlng = { lat: 0, lng: 0 };
@@ -693,16 +810,12 @@
             map = new google.maps.Map(document.getElementById("map"), {
                 center: latlng,
                 zoom: 3,
+                mapTypeControl: false,
+                streetViewControl: false,
             });
             geocoder = new google.maps.Geocoder();
 
-            var content =
-                '<div id="iw-container">' +
-                '<div class="iw-title">Drag and drop pin to change address</div>' +
-                '<div class="iw-content">' +
-                '<span class="map-marker-label"></span>' +
-                '</div>' +
-                '</div>';
+            var content = '';
             infoWindow = new google.maps.InfoWindow({ content: content });
 
             //addMarker();
@@ -771,6 +884,8 @@
             ["#Texas", 33.099147, -100.562333, 1],
         ];
 
+        let markers=[];
+
         function setMarkers(map) {
             const svgMarker = {
                 path: "M0-48c-9.8 0-17.7 7.8-17.7 17.4 0 15.5 17.7 30.6 17.7 30.6s17.7-15.4 17.7-30.6c0-9.6-7.9-17.4-17.7-17.4z",
@@ -793,8 +908,20 @@
                     zIndex: distributor[3],
                 });
 
+                markers.push({
+                    'title': distributor[0],
+                    'marker': marker
+                });
+
                 marker.addListener("click", () => {
                     window.location.href=marker.getTitle();
+                    var elm= $(marker.getTitle());
+                        elm.addClass('card-highlight');
+                        setTimeout(function(){
+                            elm.removeClass('card-highlight');
+                        },5000);
+                    $(document).scrollTop($(document).scrollTop() - 100);
+                    infoWindow.close();
                 });
             }
         }

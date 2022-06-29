@@ -1,5 +1,28 @@
+var isMobile=false;
 var svgInjectElements=[];
 var tt=0;
+var mouseIcon="data:image/png;base64,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";
+
+Array.prototype.findIndexBy = function(key,value){
+    return this.findIndex(item => item[key] === value);
+}
+
+$.ajaxSetup ({
+    // Disable caching of AJAX responses
+    cache: false
+});
+
+$.fn.delayKeyup = function(callback, ms){
+    var timer = 0;
+    var el = $(this);
+    $(this).keyup(function(){                   
+        clearTimeout (timer);
+        timer = setTimeout(function(){
+            callback(el)
+                }, ms);
+    });
+    return $(this);
+};
   
 SVGInject.setOptions({
   useCache: false, // no caching
@@ -153,18 +176,34 @@ function countryFilter(data){
     )
 }
 
-function smallPopup(content,callback) {
-    var sp = $('<div class="small-popup align-center">'+
+function smallPopup(content, callback, delay=100, autohide=0, mouseout=false) {
+    var sp = $('<div class="small-popup justify-between">'+
                         '<div class= "sp-content" ></div>'+
                         '<span class="material-icons close-sp">close</span> '+
                     '</div > ');
     $('body').append(sp);
     sp.find('.sp-content').html(content);
-    setTimeout(function(){ sp.addClass('animate-sp'); },100);
+    var tmover;
+    setTimeout(function(){ 
+      sp.addClass('animate-sp'); 
+    }, delay);
+    if(autohide>0){
+      setTimeout(function(){ sp.remove(); }, autohide);
+    }
     sp.find('.close-sp').click(function () {
         sp.remove();
         callback();
     })
+    if(mouseout){
+      sp.mouseout(function () {
+        tmover=setTimeout(function(){
+            sp.remove();
+            callback();
+        },1000);
+      }).mouseover(function(){
+        clearTimeout(tmover);
+      })
+    }
 }
 
 function openDialog(title,content){
@@ -228,10 +267,7 @@ function popupPage(elm, url){
   }
 
   function appendChild(){
-    // $.post(url,function(data){
     pageElm.find('.popup-page').load(url,function(data){
-      // pageElm.find('.popup-page').html('').append(data);
-
       pageElm.find('.close').click(function(e){
         removePopup();
       })
@@ -288,12 +324,53 @@ function popupPage(elm, url){
   $('body').addClass('open-popup-page');
 }
 
+function showLoader(){
+  var loader= $('<div id="loader" class="overlay" style="opacity: 1; visibility: visible;">'+
+                  '<div class="spinner" style="height: 100%"></div>'+
+                '</div >');
+  if( $('#loader').length ){
+      loader= $('#loader');
+  }else{
+      $('body').append(loader);
+  }
+  return loader;
+}
+
+function removeSpinner(elm){
+    if(elm){
+      elm = $(elm).length ? $(elm) : $(elm).parents('.spinner');
+      elm.removeClass('.spinner');
+    }else{
+      $('.spinner').removeClass('spinner');
+    }
+  }
+
+function zoomNotif(delay=2000){
+  smallPopup(
+    '<div class="zoom-notif"><font class="text-orange font-size-25 display-inline-block mb-10"><strong>Is the text too small or big?</strong></font><br><span class="font-size-16"><strong>To zoom in and out of a page, hold down <label>CTRL</label> + <img src="'+ mouseIcon +'" style="width: 35px;vertical-align: middle;"></strong></span></div>',
+    function(){
+        Cookies.set('zoom-notif-2', 'true', { path: '/' });
+    },
+    delay,
+    0,
+    true
+  );
+}
+
 $(document).ready(function(){
 
   if(Cookies.get('menu')){
     $('body').addClass('open');
   }
 
+  if($('body').css('position')=='relative'){
+    isMobile=true;
+  }
+
+  $('a[href]').click(function(e){
+    e.stopPropagation();
+  })
+  
   $('.img-arc').each(function(){
     SVGInject(this);
 
@@ -339,12 +416,58 @@ $(document).ready(function(){
     }
   })
 
-  if (Cookies.get('zoom-info')==null) {
-      smallPopup('<font class="text-orange font-size-14"><strong>Is the text too small or too big?</strong></font><br>To zoom in and out of a page, hold down <strong>CTRL</strong> + adjust with the middle mouse wheel.',function(){
-          Cookies.set('zoom-info', 'true', { path: '/' });
-      });
+  if (Cookies.get('zoom-notif-2')==null && !isMobile) {
+      Cookies.set('zoom-notif-2', 'true', { path: '/' });
+      zoomNotif();
   }
+
+  $('.format-currency').on('input', function() {
+    this.value = this.value
+      .replace(/[^\d]/g, '').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');// numbers and decimals only
+  });
+
+  $('input').keypress(function(event) {
+
+    if ((event.keyCode || event.which) == 13) {
+      event.preventDefault();
+      return false;
+    }
+
+  });
+
+  $('.nav-top .company-info').hover(
+    function() {
+      menuDropdownPosition();
+      $('.nav-top').addClass('open-menu-dropdown');
+    }, function() {
+      $('.nav-top').removeClass('open-menu-dropdown');
+    }
+  );
+  
+  $('.zoom-info-button').mouseover(
+    function() {
+      if( $('.zoom-notif').length == 0) zoomNotif(0);
+    }
+  );
+
+  // $('body').on('keypress keyup blur','.number-format',function(evt){
+  //     var newValue=$(this).val().toString().replace(/\s/g, '').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
+  //     $(this).val(newValue);
+  //     var charCode = (evt.which) ? evt.which : evt.keyCode;
+  //     if (charCode > 31 && (charCode < 48 || charCode > 57))
+  //         return false;
+  //     return true;
+	// })
 })
+
+function menuDropdownPosition(){
+  var mnDropdown        = $('.body-content');
+  var rightPosition     = ($(window).width() - mnDropdown.outerWidth()) / 2;
+  $('.menu-dropdown-overlay').css({
+    'right': rightPosition,
+    'top': $('.nav-top').outerHeight(),
+  });
+}
 
 $(window).on('resize',function(){
   initHeaderFooter();
@@ -352,6 +475,10 @@ $(window).on('resize',function(){
   svgInjectElements.forEach(function(svg){
     loadSVGInject(svg);
   })
+
+  if($('body').css('position')=='relative'){
+    isMobile=true;
+  }
 
   // $('section svg').each(function(){
   //   var svgElm=$(this);
