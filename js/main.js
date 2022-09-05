@@ -426,6 +426,11 @@ $(document).ready(function(){
     this.value = this.value
       .replace(/[^\d]/g, '').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');// numbers and decimals only
   });
+  
+  $('.number-format').on('input', function() {
+    this.value = this.value
+      .replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
+  });
 
   $('input').keypress(function(event) {
 
@@ -450,6 +455,10 @@ $(document).ready(function(){
       if( $('.zoom-notif').length == 0) zoomNotif(0);
     }
   );
+
+  $('.material-icons').css('opacity','1');
+  $('body').addClass('show-material-icons');
+
 
   // $('body').on('keypress keyup blur','.number-format',function(evt){
   //     var newValue=$(this).val().toString().replace(/\s/g, '').replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
@@ -488,4 +497,10 @@ $(window).on('resize',function(){
   //   svgElm.parents('section').find('.arc-overlay').css({'height':svgHeight+'px','top':'-'+(svgHeight-1)+'px'});
   //   svgElm.parents('section').find('svg').css({'top':'-'+(svgHeight-1)+'px',});
   // })
+})
+
+$(window).on('load',function () {
+  svgInjectElements.forEach(function(svg){
+    loadSVGInject(svg);
+  })
 })

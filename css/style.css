@@ -70,6 +70,15 @@ section #pattern_bottom {
     /*background-size: 100% auto;*/
 }
 
+body.show-material-icons .material-icons{
+    opacity: 1;
+}
+
+.material-icons {
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
 /* Abdul Style =======================>>> */
 /* PUSH MENU */
 
@@ -244,8 +253,26 @@ button:focus {
     padding: 0 10px
 }
 
-.menu > li:hover{
+.menu > li:hover,
+.menu > li.sub-menu ul > li:hover
+{
     background: rgba(255,255,255,0.1) !important;
+}
+
+.menu>li.sub-menu:hover {
+    background: transparent !important;
+}
+
+.menu > li.active a{
+    font-weight: bold !important;
+}
+
+.menu>li.active a:after {
+    font-family: "Material Icons";
+    content: '\e5cc';
+    position: absolute;
+    right: 20px;
+    font-size: 20px;
 }
 
 .menu-dropdown{
@@ -273,7 +300,8 @@ button:focus {
 }
 
 .sub-menu ul li{
-    margin-left: 20px;
+    margin-left: 10px;
+    padding-left: 10px;
     cursor: pointer;
 }
 
@@ -976,6 +1004,7 @@ body.open-dialog .overlay {
     min-width: 500px;
     max-width: 1280px;
     max-height: 100vh;
+    max-height: 100%;
     overflow: auto;
     color: #FFF;
     background: #FFF;
@@ -1096,11 +1125,10 @@ body.open-popup-page {
     border-radius: 10px;
     margin: 15px 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
 }
 
 .distributor-item:hover {
-    background: #f7f7f7;
+    /* background: #f7f7f7; */
 }
 
 .distributor-item .company-logo {
@@ -1123,14 +1151,14 @@ body.open-popup-page {
     margin: 0 -5px;
 }
 
-.contact-info>div {
+.contact-info>a {
     margin: 5px;
     padding: 3px 8px;
     font-size: 12px;
     border-radius: 20px;
 }
 
-.contact-info>div>span {
+.contact-info>a>span {
     font-size: 16px;
     margin-right: 5px;
 }
@@ -1147,16 +1175,25 @@ body.open-popup-page {
     color: #ED3916 !important;
 }
 
-.address {
+.company-info .address {
     font-size: 12px;
     padding-top: 10px;
     margin-top: 10px;
     border-top: 1px solid #cacaca;
 }
 
-.address span {
+.company-info .website {
+    font-size: 12px;
+}
+
+.company-info .address span {
     font-size: 12px;
     margin: 0 5px;
+}
+
+.company-info .website a {
+    font-size: 12px;
+    color: #ed4808;
 }
 
 .contact-button>div {
@@ -1181,6 +1218,48 @@ body.open-popup-page {
 
 .contact-button button span {
     display: block;
+}
+
+.distributor-item .company-logo img,
+.distributor-item .company-info .info-name h2{
+    cursor: pointer;
+}
+
+.contact-button a:hover {
+    background: #5e5d5c;
+    color: #FFF;
+    transition: all 0.5s ease;
+}
+
+.contact-info .phone:hover {
+    background: #ED3916;
+    transition: all 0.5s ease;
+}
+
+.contact-info .email:hover {
+    background: #E50B00;
+    transition: all 0.5s ease;
+}
+
+.contact-info .website {
+    border: 1px solid #ED3916;
+    color: #ED3916 !important;
+}
+
+.contact-info .website:hover {
+    background: #930f08;
+    transition: all 0.5s ease;
+}
+
+.contact-info>a:hover * {
+    color: #FFF;
+
+}
+
+.company-info .website a:hover {
+    color: #E50B00;
+    text-decoration: underline;
+    transition: all 0.5s ease;
 }
 
 /* Banner Info */
@@ -1487,6 +1566,71 @@ body.open-popup-page {
     overflow: visible;
 }
 
+.visiting-address {
+    position: relative;
+}
+
+.drive-direction-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #FFF;
+    color: #5a5a5a;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px !important;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.distributor-item.logo-name-hover .company-logo img
+{
+    opacity: 0.7;
+}
+.distributor-item.logo-name-hover .company-info .info-name h2{
+    color: #e78e7d;
+}
+
+/* .logo-name-hover .distributor-item .company-info .info-name h2 {
+    color: #9e2109;
+} */
+
+/* Tooltips */
+[tooltip] {
+    position: relative;
+}
+
+[tooltip]:hover:before {
+    opacity: 1;
+}
+
+[tooltip]:before {
+    opacity: 0;
+    content: attr(tooltip);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 5px);
+    height: fit-content;
+    display: flex;
+    display: inline-flex;
+    display: -webkit-flex;
+    justify-content: center;
+    transform: translatex(-50%);
+    white-space: nowrap;
+    font-size: 10px;
+    background: rgb(88, 86, 86);
+    color: #fff;
+    font-weight: normal;
+    padding: 2px 8px;
+    border-radius: 5px;
+    line-height: normal;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    transition: opacity .2s ease;
+    transition-delay: .5s;
+}
+
 /* Portrait Mode */
 @media screen and (orientation: portrait) {
 
@@ -1639,12 +1783,12 @@ body.open-popup-page {
 
     .popup-page {
         width: 100%;
-        height: 100vh;
-        height: 100%;
+        /* height: 100vh;
+        height: 100%; */
     }
 
     .page-arrow {
-        bottom: 10px;
+        /* bottom: 10px; */
     }
 
     form .form-responsive {

@@ -7,19 +7,19 @@
 
     <!-- Style -->
     <link rel="stylesheet" href="../../css/common.css">
-    <link rel="stylesheet" href="../../css/style.css?v=7">
+    <link rel="stylesheet" href="../../css/style.css">
 
     <!-- Icon -->
     <link rel="stylesheet" href="../../assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <!-- Font Awesome Icon 4.7.0 -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap">
     <!--Material Icon -->
 
     <!-- JS Script -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../js/svg-inject.js"></script>
     <script src="../../js/js-cookie.js"></script>
-    <script src="../../js/main.js?v=7"></script>
+    <script src="../../js/main.js?v=8"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
     <style>
@@ -240,6 +240,20 @@
             padding: 8px 15px;
             font-size: 12px;
         }
+
+        #map .centerMarker{
+            position:absolute;
+            background:url(../../assets/icons/marker.png) no-repeat;
+            background-size: auto 30px;
+            background-position: center;
+            top:50%;left:50%;
+            z-index:1;
+            margin-left:-15px;
+            margin-top:-30px;
+            height:30px;
+            width:30px;
+            cursor:pointer;
+        }
     </style>
 </head>
 
@@ -271,7 +285,7 @@
                         <li class="distributor-investor-menu display-none"><a href="../picture-gallery.html">Picture Gallery</a></li>
                         <li class="distributor-investor-menu display-none"><a href="../future-ideas.html">Future Ideas</a></li>
                         <li class="distributor-investor-menu display-none"><a href="../financial-updates.html">Financial Updates</a></li>
-                        <li><a href="../become-distributor/">Become a distributor</a></li>
+                        <li class="active"><a href="../become-distributor/">Become a distributor</a></li>
                         <li><a href="../become-investor/">Become an investor</a></li>
                         
                     </ul>
@@ -595,7 +609,7 @@
                                                             class="material-icons expand-more">expand_more</i></span>
                                                     <ul class="dropdown-item"></ul>
                                                 </div>
-                                                <input type="number" id="phone-number" parent=".input-text" placeholder="Phone Number">
+                                                <input type="text" class="number-format" id="phone-number" parent=".input-text" placeholder="Phone Number">
                                             </div>
                                         </div>
                                     </div>
@@ -618,7 +632,12 @@
                                     <div class="d-flex full-width form-responsive">
                                         <div class="input-text" required>
                                             <label label="(Must be filled in)">Password</label>
-                                            <input type="password" id="password" placeholder="Password">
+                                            <div class="input-group d-flex-important align-center full-width relative">
+                                                <input type="password" id="password" placeholder="Password">
+                                                <!-- <div class="d-flex align-center equal-width">
+                                                    <span class="material-icons password-visibility">visibility_off</span>
+                                                </div> -->
+                                            </div>
                                         </div>
                                         <div class="input-text" required>
                                             <label label="(Must be filled in)">Confirm Password</label>
@@ -654,6 +673,7 @@
                                             </div>
                                             <div class="visiting-address">
                                                 <div id="map" tabindex="-1"></div>
+                                                <!-- <span title="Drive Direction" onclick="driveDirection()" class="material-icons drive-direction-button">directions_car</span> -->
                                             </div>
                                             
                                         </div>
@@ -869,6 +889,16 @@
     <input id="logo-file" class="display-none" type="file" accept="image/*" onchange="loadFile(event)">
 
     <script>
+        function driveDirection(){
+            if(curLatlng==null){
+                openDialog('Unknown Location', 'Enable your location to know your location on map or reload page');
+                return;
+            }
+            var origin = curLatlng.lat + "%2C" + curLatlng.lng;
+            var destination = (latlng.lat()??latlng.lat) + "%2C" + (latlng.lng() ?? latlng.lng);
+            var driveDirectionLink="https://www.google.com/maps/dir/?api=1&" + origin + "&destination=" + destination;
+            $('<a href="' + driveDirectionLink + '" target="blank"></a>')[0].click();
+        }
         var loadFile = function (event) {
             var output = $('#logo-img');
             var reader = new FileReader();
@@ -953,7 +983,7 @@
                     })
                 $('#country-box').append(item);
 
-                var phoneCode = $('<li value="' + val.phone_code.replace('-') + '">' + val.name + ' (+'+ val.phone_code + ')' + '</li>');
+                var phoneCode = $('<li value="' + val.phone_code.replace('-','') + '">' + val.name + ' (+'+ val.phone_code.replace('-', '') + ')' + '</li>');
                     phoneCode.click(function(e){
                         e.stopPropagation();
                         var val=$(this).attr('value').replace('-');
@@ -995,8 +1025,8 @@
             var index = countryKeyData.findIndexBy('key', countrySelectedKey);
             var pc = countryKeyData[index].phone_code;
             $('#phone-code')
-                .attr('value', pc.replace('-'))
-                .find('.text').html('+' + pc);
+                .attr('value', pc.replace('-',''))
+                .find('.text').html('+' + pc.replace('-', ''));
         }
 
         function clearCity(){
@@ -1054,8 +1084,11 @@
                 var parent= $(this).parents('.country-city-dropdown');
                 if(parent.hasClass('search-mode')){
                     parent
-                        .addClass('expanded')
                         .removeClass('search-mode');
+                    $(this).prev().html('');
+                    if(parent.is('#country')){
+                        clearCity();
+                    }
                     if (isMobile) {
                         $('body').addClass('dropdown-expanded');
                     }
@@ -1208,7 +1241,7 @@
         })
 
         // Google Maps
-        let map, latlng, marker, infoWindow, geocoder;
+        let map, curLatlng, latlng, marker, infoWindow, geocoder;
         var lockMap=false;
         var infoWindowContent =
                 '<div id="iw-container">' +
@@ -1230,9 +1263,9 @@
         }
 
         function setMapPosition() {
-            infoWindow.setPosition(latlng);
+            /*infoWindow.setPosition(latlng);
             infoWindow.setContent(infoWindowContent);
-            infoWindow.open(map, marker);
+            infoWindow.open(map, marker);*/
             map.setCenter(latlng);
         }
         
@@ -1252,34 +1285,48 @@
                     strictBounds: true
                 },
             });
+
+            $('<div/>').addClass('centerMarker').appendTo(map.getDiv());
             
             geocoder = new google.maps.Geocoder();
 
-            
             infoWindow = new google.maps.InfoWindow({content: infoWindowContent });
 
-            addMarker();
+            //addMarker();
 
+            google.maps.event.addListener(map, 'dragend', function () {
+                if (lockMap) { return; }
+                latlng = map.getCenter();
+                geocodeLatLng(geocoder, map);
+            });
+
+            /*
+            map.addListener('center_changed', () => {
+                marker.setPosition(map.getCenter())
+            })
+            /*
             google.maps.event.addListener(map, 'drag', function () {
                 if (lockMap) { return; }
-                infoWindow.close();
+                //infoWindow.close();
                 marker.setPosition(map.getCenter());
             });
             
+            /*
             google.maps.event.addListener(map, 'dragend', function () {
                 if (lockMap) { return; }
                 latlng = map.getCenter();
                 setMapPosition();
+                marker.setPosition(map.getCenter());
                 geocodeLatLng(geocoder, map);
             });
-
+            /*
             google.maps.event.addListener(map, 'click', function (event) {
                 if(lockMap || isMobile){ return; }
                 latlng= event.latLng;
                 marker.setPosition(latlng);
                 geocodeLatLng(geocoder, map);
             });
-
+            */
 
         }
 
@@ -1292,7 +1339,9 @@
                             lng: position.coords.longitude,
                         };
 
-                        marker.setPosition(latlng);
+                        curLatlng = latlng;
+
+                        //marker.setPosition(latlng);
                         setMapPosition();
                         map.setZoom(15);
                         geocodeLatLng(geocoder, map);
@@ -1331,9 +1380,10 @@
                 position: latlng,
                 map: map,
                 icon: svgMarker,
-                draggable: true
+                //draggable: true
             });
 
+            /*
             marker.addListener("click", () => {
                 infoWindow.open(map, marker);
             });
@@ -1347,6 +1397,7 @@
                 setMapPosition();
                 geocodeLatLng(geocoder, map);
             });
+            */
 
             
         }
@@ -1358,8 +1409,7 @@
                     if (response.results[0]) {
                         var address= response.results[0].formatted_address;
                         setMapPosition();
-                        $('.map-marker-label').html(address);
-                        //$('#visiting-address').val(address);
+                        //$('.map-marker-label').html(address);
 
                         var ac= response.results[0].address_components;
                         if(ac.length>1){
@@ -1401,13 +1451,14 @@
                         }
 
                     } else {
-                        $('.map-marker-label').html("Unknown Address");
+                        //$('.map-marker-label').html("Unknown Address");
                     }
                 })
-                .catch((e) => infoWindow.setContent('<span class="p-10 text-white display-block"><strong>Unknown Address</strong><br>Move the map to another location.</span>'));
+                .catch((e) => {});
         }
 
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            /*
             infoWindow.setPosition(pos);
             infoWindow.setContent(
                 browserHasGeolocation
@@ -1415,6 +1466,7 @@
                     : "Error: Your browser doesn't support location."
             );
             infoWindow.open(map);
+            */
         }
 
         function setMapAddress(address) {  // "London, UK" for example 
@@ -1437,7 +1489,7 @@
                             map.setZoom(13);
                         }
                         geocodeLatLng(geocoder, map);
-                        marker.setPosition(latlng);
+                        //marker.setPosition(latlng);
                         //setMapPosition();
                     }
                 });
